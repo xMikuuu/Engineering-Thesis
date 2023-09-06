@@ -16,6 +16,13 @@ public class Actions : MonoBehaviour
     [SerializeField] GameObject Player;
     [SerializeField] GameObject AI;   
 
+    [SerializeField] public Button leftButton;
+    [SerializeField] public Button rightButton;
+
+    [SerializeField] public TMP_Text leftButtonText;
+    [SerializeField] public TMP_Text rightButtonText;
+
+
     private float speed = 2f; // movement speed
     private Vector2 target; // target position
     private float step; // movement step
@@ -34,21 +41,54 @@ public class Actions : MonoBehaviour
     void Update(){
         // Check if player is currently moving if so, do this fancy functions
         if(isMovingLeft){
-            Debug.Log(target.x);
+            //Debug.Log(target.x);
+
+            if(target.x<-6.5f){
+                target.x = -6.5f;
+            }
+
             turnAction.transform.position = Vector2.MoveTowards(turnAction.transform.position,target,step);
             if(target.x==turnAction.transform.position.x){
                 isMovingLeft = false;
                 CheckTurn();
             }
+            // Turn off leftt movement button if player is at the end of the map
         }
         if(isMovingRight){
-            Debug.Log(target.x);
+            //Debug.Log(target.x);
+
+            if(target.x>6.5f){
+                target.x = 6.5f;
+            }
+
             turnAction.transform.position = Vector2.MoveTowards(turnAction.transform.position,target,step);
+
             if(target.x==turnAction.transform.position.x){
                 isMovingRight = false;
                 CheckTurn();
             }
         }
+
+        // Turn off left movement button if player is at the left end of the map
+        if(Player.transform.position.x == -6.5){
+            leftButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            leftButton.gameObject.SetActive(true);
+        }
+
+
+        // Turn off right movement button if player is at the right end of the map
+        if(Player.transform.position.x == 6.5){
+            rightButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            rightButton.gameObject.SetActive(true);
+        }
+
+
     }
 
     public void MoveLeft(){ // functions to move left or right (from player perspective they are both called by button in game object)
@@ -68,6 +108,6 @@ public class Actions : MonoBehaviour
         else{
             turnAction = Player;
         }
-        turnFlag = !turnFlag;
+        //turnFlag = !turnFlag;
     }
 }
