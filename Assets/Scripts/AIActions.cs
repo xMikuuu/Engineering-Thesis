@@ -14,12 +14,6 @@ public class AIActions : MonoBehaviour
     public static bool turnMade=false;
 
 
-
-
-
-
-
-    // Update is called once per frame
     void Update()
     {
         // Random movement left or right
