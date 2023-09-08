@@ -294,7 +294,7 @@ RectTransform:
   - {fileID: 692741623}
   - {fileID: 1364915599}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 333511321}
   - component: {fileID: 333511322}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: AISprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1343,8 +1343,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 667726196}
+  - component: {fileID: 667726197}
+  - component: {fileID: 667726198}
   m_Layer: 0
-  m_Name: Opponent
+  m_Name: AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1365,6 +1367,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &667726197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667726195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a3b4b15f8bf91408fe8998388f0fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitpoints: {fileID: 692741624}
+  slider: {fileID: 401024734}
+  healthBar: {fileID: 980383260}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.94392514, b: 0, a: 1}
+    key2: {r: 0, g: 1, b: 0.18039227, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 32768
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  maxHealth: 100
+  currentHealth: 0
+--- !u!114 &667726198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667726195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba0d6095b7820f4db9cec64c74ab3a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Actions: {fileID: 1910600633}
+  AI: {fileID: 667726195}
 --- !u!1 &692741622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,6 +1571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 771400301}
   - component: {fileID: 771400302}
+  - component: {fileID: 771400303}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1527,7 +1590,6 @@ Transform:
   m_LocalPosition: {x: -6.5, y: 0, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1392927745}
   - {fileID: 1341405606}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1578,6 +1640,22 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   maxHealth: 100
   currentHealth: 0
+--- !u!114 &771400303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771400300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a58ce2ca9901504f8748027c1dc2945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Actions: {fileID: 1910600633}
+  Player: {fileID: 771400300}
+  leftButton: {fileID: 204245965}
+  rightButton: {fileID: 1906586467}
 --- !u!1 &980383258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,12 +1865,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258151618}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1316190462
 GameObject:
@@ -1823,7 +1901,7 @@ Transform:
   m_Children:
   - {fileID: 536278478}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1341405605
 GameObject:
@@ -1836,7 +1914,7 @@ GameObject:
   - component: {fileID: 1341405606}
   - component: {fileID: 1341405607}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1854,7 +1932,7 @@ Transform:
   m_LocalScale: {x: 3.2, y: 3.2, z: 1}
   m_Children: []
   m_Father: {fileID: 771400301}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1341405607
 SpriteRenderer:
@@ -1995,7 +2073,7 @@ GameObject:
   - component: {fileID: 1392927747}
   - component: {fileID: 1392927746}
   m_Layer: 5
-  m_Name: ActionMenu
+  m_Name: PlayerActionMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2009,17 +2087,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392927744}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.1763816}
+  m_LocalPosition: {x: 0, y: 0, z: 0.17638159}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 204245964}
   - {fileID: 1906586466}
-  m_Father: {fileID: 771400301}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.7038, y: -4.09}
+  m_AnchoredPosition: {x: -5.7962, y: -4.09}
   m_SizeDelta: {x: 5.2078, y: 2.2513}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392927746
@@ -2484,10 +2562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 771400300}
   AI: {fileID: 667726195}
-  leftButton: {fileID: 204245965}
-  rightButton: {fileID: 1906586467}
-  leftButtonText: {fileID: 1951770200}
-  rightButtonText: {fileID: 1399883991}
+  xBound: 6.5
+  DistanceToMove: 1.5
 --- !u!1 &1951770198
 GameObject:
   m_ObjectHideFlags: 0

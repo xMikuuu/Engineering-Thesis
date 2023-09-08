@@ -5,9 +5,8 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class AI : MonoBehaviour
 {
-
     private static float time;
     private float timeRemaining = 1;
 
@@ -19,13 +18,14 @@ public class Player : MonoBehaviour
     public Gradient gradient; // gradient thingy to change colors
     [SerializeField] public int maxHealth; // maximum health player can have
     public int currentHealth; // current player health
-
+    // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         SetHealth();
     }
 
+    // Update is called once per frame
     void Update()
     {
         //OneSecondTimer();
@@ -36,15 +36,9 @@ public class Player : MonoBehaviour
         hitpoints.text = currentHealth.ToString();
         slider.value = currentHealth;
         healthBar.color = gradient.Evaluate(slider.normalizedValue);
-        // if(currentHealth==0){
-        //     Debug.Log("death");
-        // }
-        // else{
-        //     currentHealth-=1;
-        // }
     }
 
-    // Set max health and a bar to right value
+
     public void SetHealth()
     {
         slider.maxValue = maxHealth;
@@ -77,5 +71,4 @@ public class Player : MonoBehaviour
             //MainCamera.orthographicSize += 0.005f;
         }
     }
-
 }

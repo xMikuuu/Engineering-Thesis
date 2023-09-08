@@ -14,14 +14,8 @@ public class Actions : MonoBehaviour
     public static GameObject turnAction; // variable to which it assigns the current object
 
     [SerializeField] GameObject Player;
-    [SerializeField] GameObject AI;   
-
-    [SerializeField] public Button leftButton;
-    [SerializeField] public Button rightButton;
-
-    [SerializeField] public TMP_Text leftButtonText;
-    [SerializeField] public TMP_Text rightButtonText;
-
+    [SerializeField] GameObject AI;  
+   // [SerializeField] GameObject AIActions;
 
     private float speed = 2f; // movement speed
     private Vector2 target; // target position
@@ -31,7 +25,8 @@ public class Actions : MonoBehaviour
     private static bool isMovingRight;
 
     // X bound is: <-6.5;6.5>
-    private static double xBound;
+    [SerializeField] public double xBound;
+    [SerializeField] public double DistanceToMove;
 
     void Awake(){
         CheckTurn();
@@ -41,73 +36,49 @@ public class Actions : MonoBehaviour
     void Update(){
         // Check if player is currently moving if so, do this fancy functions
         if(isMovingLeft){
-            //Debug.Log(target.x);
-
             if(target.x<-6.5f){
                 target.x = -6.5f;
             }
 
             turnAction.transform.position = Vector2.MoveTowards(turnAction.transform.position,target,step);
             if(target.x==turnAction.transform.position.x){
-                isMovingLeft = false;
                 CheckTurn();
+                isMovingLeft = false;
+                AIActions.turnMade=false;
             }
-            // Turn off leftt movement button if player is at the end of the map
+            
         }
         if(isMovingRight){
-            //Debug.Log(target.x);
-
             if(target.x>6.5f){
                 target.x = 6.5f;
             }
-
             turnAction.transform.position = Vector2.MoveTowards(turnAction.transform.position,target,step);
-
             if(target.x==turnAction.transform.position.x){
-                isMovingRight = false;
                 CheckTurn();
-            }
+                isMovingRight = false;
+                AIActions.turnMade=false;
+            }       
         }
-
-        // Turn off left movement button if player is at the left end of the map
-        if(Player.transform.position.x == -6.5){
-            leftButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            leftButton.gameObject.SetActive(true);
-        }
-
-
-        // Turn off right movement button if player is at the right end of the map
-        if(Player.transform.position.x == 6.5){
-            rightButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            rightButton.gameObject.SetActive(true);
-        }
-
-
     }
 
     public void MoveLeft(){ // functions to move left or right (from player perspective they are both called by button in game object)
-        target = new Vector2(turnAction.transform.position.x-1.5f,turnAction.transform.position.y);
+        target = new Vector2(turnAction.transform.position.x-(float)DistanceToMove,turnAction.transform.position.y);
         isMovingLeft = true;
     }
 
-    public void MoveRight(){
-        target = new Vector2(turnAction.transform.position.x+1.5f,turnAction.transform.position.y);
+    public void MoveRight(){     
+        target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
         isMovingRight = true;
     }
 
-    void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
+
+    public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
         if(turnFlag==true){
             turnAction = AI;
         }
         else{
             turnAction = Player;
         }
-        //turnFlag = !turnFlag;
+        turnFlag = !turnFlag;
     }
 }
