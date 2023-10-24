@@ -15,7 +15,6 @@ public class Actions : MonoBehaviour
 
     [SerializeField] GameObject Player;
     [SerializeField] GameObject AI;  
-   // [SerializeField] GameObject AIActions;
 
     private float speed = 2f; // movement speed
     private Vector2 target; // target position
@@ -28,8 +27,25 @@ public class Actions : MonoBehaviour
     [SerializeField] public double xBound;
     [SerializeField] public double DistanceToMove;
 
+    // Distance for attacks
+    private float distance; // check distance between players
+    [SerializeField] double attackRange; // range of attacks 
+    public bool inRange; // i think i dont have to comment that one 💀
 
-    private float distance;
+    // variables for attacks
+    private int hitOrMiss; // variable to check if u hit or miss
+    [SerializeField] public int quickDamage;
+    [SerializeField] public int quickProcent;
+
+    [SerializeField] public int normalDamage;
+    [SerializeField] public int normalProcent;
+
+    [SerializeField] public int heavyDamage;
+    [SerializeField] public int heavyProcent;    
+
+    // health for both players
+    [SerializeField] PlayerStats PlayerHealth;
+    [SerializeField] AIStats AIHealth;   
 
 
     void Awake(){
@@ -38,13 +54,10 @@ public class Actions : MonoBehaviour
     }
 
     void Update(){
-        // Check if player is currently moving if so, do this fancy functions
-
         
         CheckDistance(Player.transform.position,AI.transform.position);
 
-
-
+        // Check if player is currently moving if so, do this fancy functions
         if(isMovingLeft){
             if(target.x<-6.5f){
                 target.x = -6.5f;
@@ -71,12 +84,95 @@ public class Actions : MonoBehaviour
         }
     }
 
-    public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players
-        distance = Vector2.Distance(a, b);
-        Debug.Log(distance);
-        // if distance <= 3 to można sie bitkować
+
+
+
+
+
+    public void QuickAttack(){
+        hitOrMiss = UnityEngine.Random.Range(0,100);
+
+        // hit
+        if(hitOrMiss<=quickProcent){
+            if(turnAction == Player){
+                AIHealth.currentHealth -= quickDamage;
+                CheckWin();
+            }
+            else{
+                PlayerHealth.currentHealth -= quickDamage;
+                CheckWin();
+            }
+            CheckTurn();
+        }
+        // miss
+        else{
+            CheckTurn();
+        }
     }
 
+    public void NormalAttack(){
+        hitOrMiss = UnityEngine.Random.Range(0,100);
+
+        // hit
+        if(hitOrMiss<=normalProcent){
+            if(turnAction == Player){
+                AIHealth.currentHealth -= normalDamage;
+                CheckWin();
+            }
+            else{
+                PlayerHealth.currentHealth -= normalDamage;
+                CheckWin();
+            }
+            CheckTurn();
+        }
+        // miss
+        else{
+            CheckTurn();
+        }
+    }
+
+    public void HeavyAttack(){
+        hitOrMiss = UnityEngine.Random.Range(0,100);
+
+        // hit
+        if(hitOrMiss<=heavyProcent){
+            if(turnAction == Player){
+                AIHealth.currentHealth -= heavyDamage;
+                CheckWin();
+            }
+            else{
+                PlayerHealth.currentHealth -= heavyDamage;
+                CheckWin();
+            }
+            CheckTurn();
+        }
+        // miss
+        else{
+            CheckTurn();
+        }
+    }
+
+    private void CheckWin(){
+        // Add ending screen or smth idk 💀
+        if (AIHealth.currentHealth<=0){
+            AIHealth.currentHealth = 0;
+            Debug.Log("Player won! Fatality");
+        }
+        if (PlayerHealth.currentHealth<=0){
+            PlayerHealth.currentHealth = 0;
+            Debug.Log("AI won! Fatality");
+        }
+    }
+
+    public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players and switch inRange flag if distance in enough or not
+        distance = Vector2.Distance(a, b);
+        if (distance <= attackRange){
+            inRange = true;
+        }
+        else{
+            inRange = false;
+        }
+    }
 
     public void MoveLeft(){ // functions to move left or right (from player perspective they are both called by button in game object)
         target = new Vector2(turnAction.transform.position.x-(float)DistanceToMove,turnAction.transform.position.y);
@@ -89,12 +185,12 @@ public class Actions : MonoBehaviour
     }
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
-        if(turnFlag==true){
-            turnAction = AI;
-        }
-        else{
-            turnAction = Player;
-        }
-        turnFlag = !turnFlag;
+                if(turnFlag==true){
+                    turnAction = AI;
+                }
+                else{
+                    turnAction = Player;
+                }
+                turnFlag = !turnFlag;    
     }
 }

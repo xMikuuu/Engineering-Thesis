@@ -9,7 +9,6 @@ public class PlayerActions : MonoBehaviour
 {
     [SerializeField] Actions Actions;
     [SerializeField] GameObject Player;
-    [SerializeField] PlayerStats PlayerVariables;
     [SerializeField] GameObject AI;
 
 
@@ -19,13 +18,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] public Button quickAttackButton;
     [SerializeField] public Button normalAttackButton;  
     [SerializeField] public Button heavyAttackButton;  
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {       
         // If its players turn:
@@ -48,8 +41,7 @@ public class PlayerActions : MonoBehaviour
             }
 
 
-            if(PlayerVariables.inRange==true){
-                Debug.Log("chuj");
+            if(Actions.inRange==true){
                 quickAttackButton.interactable = true;
                 normalAttackButton.interactable = true;
                 heavyAttackButton.interactable = true;

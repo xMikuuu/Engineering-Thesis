@@ -41,25 +41,7 @@ public class PlayerStats : MonoBehaviour
         //     currentHealth-=1;
         // }
 
-
-        //CheckCollision();
-
-
-
     }
-
-
-
-
-
-    // void OnCollisionEnter2D(Collision2D col){ 
-    //     inRange = true;       
-    // }
-    // void OnCollisionExit2D(Collision2D col){ 
-    //      inRange = false;       
-    // }
-
-
 
 
     // Set max health and a bar to right value
@@ -74,10 +56,9 @@ public class PlayerStats : MonoBehaviour
     {
         if (time > 1)
         {
-            if (time % 1 == 0)
+            if (time % 2 == 0)
             {
                 currentHealth-=5;
-
             }
         }
     }
@@ -91,7 +72,7 @@ public class PlayerStats : MonoBehaviour
             timeRemaining =1;
             //textElement.text = time.ToString();
             //Debug.Log(time);
-            //testDmg();
+            testDmg();
             //MainCamera.orthographicSize += 0.005f;
         }
     }

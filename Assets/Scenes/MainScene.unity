@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 90959692}
   - component: {fileID: 90959691}
   - component: {fileID: 90959694}
+  - component: {fileID: 90959695}
   m_Layer: 5
   m_Name: NormalAttack
   m_TagString: Untagged
@@ -209,7 +210,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1910600633}
         m_TargetAssemblyTypeName: Actions, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: NormalAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -283,6 +284,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &90959695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90959689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551c4b422e91c4542a1355ad312a746e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1074154789}
+  background: {fileID: 1215032666}
+  stats: {fileID: 1910600633}
 --- !u!1 &108378732
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +815,7 @@ GameObject:
   - component: {fileID: 329270697}
   - component: {fileID: 329270696}
   - component: {fileID: 329270699}
+  - component: {fileID: 329270700}
   m_Layer: 5
   m_Name: HeavyAttack
   m_TagString: Untagged
@@ -872,7 +889,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1910600633}
         m_TargetAssemblyTypeName: Actions, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: HeavyAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -946,6 +963,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &329270700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329270694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f4bcb56cc2a81546b699bc436872097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1074154789}
+  background: {fileID: 1215032666}
+  stats: {fileID: 1910600633}
 --- !u!1 &333511320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,6 +1162,7 @@ GameObject:
   - component: {fileID: 417488987}
   - component: {fileID: 417488986}
   - component: {fileID: 417488989}
+  - component: {fileID: 417488990}
   m_Layer: 5
   m_Name: QuickAttack
   m_TagString: Untagged
@@ -1203,7 +1236,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1910600633}
         m_TargetAssemblyTypeName: Actions, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: QuickAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1277,6 +1310,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &417488990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417488984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec99c047a5306341bd387628bafccd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1074154789}
+  background: {fileID: 1215032666}
+  stats: {fileID: 1910600633}
 --- !u!1 &501475268
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,7 +2254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Actions: {fileID: 1910600633}
   Player: {fileID: 771400300}
-  PlayerVariables: {fileID: 771400302}
   AI: {fileID: 667726195}
   leftButton: {fileID: 204245965}
   rightButton: {fileID: 1906586467}
@@ -2715,7 +2762,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2816,8 +2863,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.23, y: 0.219}
+  m_SizeDelta: {x: 0.7263, y: 1.438}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1215032668
 SpriteRenderer:
@@ -2864,7 +2911,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 4, y: 2}
+  m_Size: {x: 3, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3810,6 +3857,16 @@ MonoBehaviour:
   AI: {fileID: 667726195}
   xBound: 6.5
   DistanceToMove: 1
+  attackRange: 3
+  inRange: 0
+  quickDamage: 34
+  quickProcent: 50
+  normalDamage: 50
+  normalProcent: 33
+  heavyDamage: 67
+  heavyProcent: 25
+  PlayerHealth: {fileID: 771400302}
+  AIHealth: {fileID: 667726197}
 --- !u!1 &1951770198
 GameObject:
   m_ObjectHideFlags: 0

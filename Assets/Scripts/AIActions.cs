@@ -18,9 +18,15 @@ public class AIActions : MonoBehaviour
     {
         // Random movement left or right
         if(Actions.turnAction==AI && !turnMade){
-            randomMove = UnityEngine.Random.Range(0,2);
 
-            if(randomMove==1){
+            if (Actions.inRange == true){
+                randomMove = UnityEngine.Random.Range(0,5);
+            }
+            else{
+                randomMove = UnityEngine.Random.Range(0,2);
+            }
+
+            if(randomMove==0){
                 if(AI.transform.position.x==-(Actions.xBound)){
                     Actions.MoveRight();
                 }
@@ -28,8 +34,7 @@ public class AIActions : MonoBehaviour
                     Actions.MoveLeft();
                 }
             }
-
-            else{
+            if(randomMove==1){
                 if(AI.transform.position.x==(Actions.xBound)){
                     Actions.MoveLeft();
                 }
@@ -37,6 +42,17 @@ public class AIActions : MonoBehaviour
                     Actions.MoveRight();
                 }
             }
+            if(randomMove==2){
+                Actions.QuickAttack();
+            }    
+            if(randomMove==3){
+                Actions.NormalAttack();
+            } 
+            if(randomMove==4){
+                Actions.HeavyAttack();
+            } 
+
+
             turnMade=true;
         }
 
