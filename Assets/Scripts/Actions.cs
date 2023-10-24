@@ -28,6 +28,10 @@ public class Actions : MonoBehaviour
     [SerializeField] public double xBound;
     [SerializeField] public double DistanceToMove;
 
+
+    private float distance;
+
+
     void Awake(){
         CheckTurn();
         step = speed * Time.deltaTime;
@@ -35,6 +39,12 @@ public class Actions : MonoBehaviour
 
     void Update(){
         // Check if player is currently moving if so, do this fancy functions
+
+        
+        CheckDistance(Player.transform.position,AI.transform.position);
+
+
+
         if(isMovingLeft){
             if(target.x<-6.5f){
                 target.x = -6.5f;
@@ -61,6 +71,13 @@ public class Actions : MonoBehaviour
         }
     }
 
+    public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players
+        distance = Vector2.Distance(a, b);
+        Debug.Log(distance);
+        // if distance <= 3 to można sie bitkować
+    }
+
+
     public void MoveLeft(){ // functions to move left or right (from player perspective they are both called by button in game object)
         target = new Vector2(turnAction.transform.position.x-(float)DistanceToMove,turnAction.transform.position.y);
         isMovingLeft = true;
@@ -70,7 +87,6 @@ public class Actions : MonoBehaviour
         target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
         isMovingRight = true;
     }
-
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
         if(turnFlag==true){

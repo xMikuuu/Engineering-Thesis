@@ -9,10 +9,16 @@ public class PlayerActions : MonoBehaviour
 {
     [SerializeField] Actions Actions;
     [SerializeField] GameObject Player;
+    [SerializeField] PlayerStats PlayerVariables;
+    [SerializeField] GameObject AI;
+
 
     // Movement buttons
     [SerializeField] public Button leftButton;
     [SerializeField] public Button rightButton;
+    [SerializeField] public Button quickAttackButton;
+    [SerializeField] public Button normalAttackButton;  
+    [SerializeField] public Button heavyAttackButton;  
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +47,24 @@ public class PlayerActions : MonoBehaviour
                 rightButton.interactable = true;
             }
 
+
+            if(PlayerVariables.inRange==true){
+                Debug.Log("chuj");
+                quickAttackButton.interactable = true;
+                normalAttackButton.interactable = true;
+                heavyAttackButton.interactable = true;
+            }
+            else{
+                quickAttackButton.interactable = false;
+                normalAttackButton.interactable = false;
+                heavyAttackButton.interactable = false;
+            }
+
+
+
+
+
+
         }
         else
         // If its AI's turn: (turn off every button)
@@ -48,6 +72,9 @@ public class PlayerActions : MonoBehaviour
         {
             leftButton.interactable = false;
             rightButton.interactable = false;
+            quickAttackButton.interactable = false;
+            normalAttackButton.interactable = false;
+            heavyAttackButton.interactable = false;
         }
 
 
