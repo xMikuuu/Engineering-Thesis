@@ -59,7 +59,7 @@ public class Actions : MonoBehaviour
     void Awake(){
         CheckTurn();
         step = speed * Time.deltaTime;
-        //consoleBackground.GetComponent<SpriteRenderer>().enabled = true; // turn on background of the console
+        consoleBackground.GetComponent<SpriteRenderer>().enabled = true; // turn on background of the console
     }
 
     void Update(){

@@ -13,11 +13,11 @@ public class PlayerActions : MonoBehaviour
 
 
     // Movement buttons
-    [SerializeField] public Button leftButton;
-    [SerializeField] public Button rightButton;
     [SerializeField] public Button quickAttackButton;
     [SerializeField] public Button normalAttackButton;  
     [SerializeField] public Button heavyAttackButton;  
+    public bool rightButtonClickable;
+    public bool leftButtonClickable;   
 
     void Update()
     {       
@@ -25,19 +25,19 @@ public class PlayerActions : MonoBehaviour
         if(Actions.turnAction==Player && Actions.gameFinished == false){
             // Disable buttons if player is on the edge of the map
             if(Player.transform.position.x == -(Actions.xBound)){
-                leftButton.interactable = false;
+                leftButtonClickable = false;
             }
             else
             {
-                leftButton.interactable = true;
+                leftButtonClickable = true;
             }
 
             if(Player.transform.position.x == Actions.xBound){
-                rightButton.interactable = false;
+                rightButtonClickable = false;
             }
             else
             {
-                rightButton.interactable = true;
+                rightButtonClickable = true;
             }
 
 
@@ -60,8 +60,9 @@ public class PlayerActions : MonoBehaviour
     }
 
     public void DisableAllButtons(){
-        leftButton.interactable = false;
-        rightButton.interactable = false;
+        leftButtonClickable = false;
+        rightButtonClickable = false;
+
         quickAttackButton.interactable = false;
         normalAttackButton.interactable = false;
         heavyAttackButton.interactable = false;

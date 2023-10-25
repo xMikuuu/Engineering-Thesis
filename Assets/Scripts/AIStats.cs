@@ -34,18 +34,6 @@ public class AIStats : MonoBehaviour
         healthBar.color = gradient.Evaluate(slider.normalizedValue);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     public void SetHealth()
     {
         slider.maxValue = maxHealth;
