@@ -12,9 +12,11 @@ public class Actions : MonoBehaviour
     // 1 = AI
     public static bool turnFlag;
     public static GameObject turnAction; // variable to which it assigns the current object
+    public bool gameFinished = false;
 
     [SerializeField] GameObject Player;
     [SerializeField] GameObject AI;  
+    [SerializeField] PlayerActions PlayerActions;      
 
     private float speed = 2f; // movement speed
     private Vector2 target; // target position
@@ -34,6 +36,7 @@ public class Actions : MonoBehaviour
 
     // variables for attacks
     private int hitOrMiss; // variable to check if u hit or miss
+    private string hitOrMissString;  // variable to prompt miss or hit
 
     [SerializeField] public int quickDamage;
     [SerializeField] public int quickProcent;
@@ -48,16 +51,20 @@ public class Actions : MonoBehaviour
     [SerializeField] PlayerStats PlayerHealth;
     [SerializeField] AIStats AIHealth;   
 
+    // "console" to print AI actions
+    [SerializeField] public TMP_Text consoleText;
+    [SerializeField] GameObject consoleBackground;
+
 
     void Awake(){
         CheckTurn();
         step = speed * Time.deltaTime;
+        consoleBackground.GetComponent<SpriteRenderer>().enabled = true; // turn on background of the console
     }
 
     void Update(){
         
         CheckDistance(Player.transform.position,AI.transform.position);
-
         // Check if player is currently moving if so, do this fancy functions
         if(isMovingLeft){
             if(target.x<-6.5f){
@@ -85,7 +92,6 @@ public class Actions : MonoBehaviour
         }
     }
 
-
     private void Attack(int damage,int chance){
 
         hitOrMiss = UnityEngine.Random.Range(1,101); // 1-100 range
@@ -98,45 +104,58 @@ public class Actions : MonoBehaviour
             else{
                 PlayerHealth.currentHealth -= damage;
             }
+            consoleText.text += "\nHit!";
             CheckWin();
-            CheckTurn();
+            AIActions.turnMade=false;
         }
         // miss
         else{
+            consoleText.text += "\nMissed!";
             CheckTurn();
+            AIActions.turnMade=false;
         }
     }
 
     public void QuickAttack(){
+        if(turnAction==AI){
+            consoleText.text = turnAction.name+" used Quick Attack!";
+        }
         Attack(quickDamage,quickProcent);
     }
 
     public void NormalAttack(){
+        if(turnAction==AI){
+            consoleText.text = turnAction.name+" used Normal Attack!";
+        }
         Attack(normalDamage,normalProcent);
     }
 
     public void HeavyAttack(){
+        if(turnAction==AI){
+            consoleText.text = turnAction.name+" used Heavy Attack!";
+        }
         Attack(heavyDamage,heavyProcent);
     }
 
     private void CheckWin(){
-
-        //Debug.Log(turnAction);
         // Add ending screen or smth idk 💀
         if (AIHealth.currentHealth<=0){
             AIHealth.currentHealth = 0;
-            Debug.Log("Player won! Fatality");
+            consoleText.text = turnAction.name+" Won! Fatality";
+            turnAction = Player;
+            gameFinished = true;
+            PlayerActions.DisableAllButtons();
         }
         if (PlayerHealth.currentHealth<=0){
             PlayerHealth.currentHealth = 0;
-            Debug.Log("AI won! Fatality");
+            consoleText.text = turnAction.name+" Won! Fatality";
+            turnAction = Player;
+            gameFinished = true;
+            PlayerActions.DisableAllButtons();
         }
-
-
-
-
-
-
+        else{
+            CheckTurn();
+        }
     }
 
     public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players and switch inRange flag if distance in enough or not
@@ -152,11 +171,17 @@ public class Actions : MonoBehaviour
     public void MoveLeft(){ // functions to move left or right (from player perspective they are both called by button in game object)
         target = new Vector2(turnAction.transform.position.x-(float)DistanceToMove,turnAction.transform.position.y);
         isMovingLeft = true;
+        if(turnAction==AI){
+            consoleText.text = turnAction.name+" moved Left";
+        }
     }
 
     public void MoveRight(){     
         target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
         isMovingRight = true;
+        if(turnAction==AI){
+            consoleText.text = turnAction.name+" moved Right";
+        }
     }
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
