@@ -14,7 +14,7 @@ public class Quick : MonoBehaviour
     void OnMouseOver()
     {
         textElement.text = "Quick Attack\n"+"Deal: "+stats.quickDamage+"dmg\n"+stats.quickProcent+"% to hit";
-        background.GetComponent<SpriteRenderer>().enabled = true;
+        //background.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
     {

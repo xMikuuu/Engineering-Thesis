@@ -14,7 +14,7 @@ public class Normal : MonoBehaviour
     void OnMouseOver()
     {
         textElement.text = "Normal Attack\n"+"Deal: "+stats.normalDamage+"dmg\n"+stats.normalProcent+"% to hit";
-        background.GetComponent<SpriteRenderer>().enabled = true;
+        //background.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
     {

@@ -14,7 +14,7 @@ public class Heavy : MonoBehaviour
     void OnMouseOver()
     {
         textElement.text = "Heavy Attack\n"+"Deal: "+stats.heavyDamage+"dmg\n"+stats.heavyProcent+"% to hit";
-        background.GetComponent<SpriteRenderer>().enabled = true;
+        //background.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
     {

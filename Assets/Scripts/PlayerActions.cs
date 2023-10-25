@@ -51,12 +51,6 @@ public class PlayerActions : MonoBehaviour
                 normalAttackButton.interactable = false;
                 heavyAttackButton.interactable = false;
             }
-
-
-
-
-
-
         }
         else
         // If its AI's turn: (turn off every button)

@@ -17,7 +17,7 @@ public class AIActions : MonoBehaviour
     void Update()
     {
         // Random movement left or right
-        if(Actions.turnAction==AI && !turnMade){
+        if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false){
 
             if (Actions.inRange == true){
                 randomMove = UnityEngine.Random.Range(0,5);

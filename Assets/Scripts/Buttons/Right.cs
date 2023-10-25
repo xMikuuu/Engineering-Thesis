@@ -12,7 +12,7 @@ public class Right : MonoBehaviour
     void OnMouseOver()
     {
         textElement.text = "Move right";
-        background.GetComponent<SpriteRenderer>().enabled = true;
+        //background.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
     {

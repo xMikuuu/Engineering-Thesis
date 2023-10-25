@@ -12,7 +12,7 @@ public class Left : MonoBehaviour
     void OnMouseOver()
     {
         textElement.text = "Move left";
-        background.GetComponent<SpriteRenderer>().enabled = true;
+        //background.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
     {
