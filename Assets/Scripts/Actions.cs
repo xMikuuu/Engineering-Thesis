@@ -34,6 +34,7 @@ public class Actions : MonoBehaviour
 
     // variables for attacks
     private int hitOrMiss; // variable to check if u hit or miss
+
     [SerializeField] public int quickDamage;
     [SerializeField] public int quickProcent;
 
@@ -85,74 +86,42 @@ public class Actions : MonoBehaviour
     }
 
 
+    private void Attack(int damage,int chance){
 
-
-
-
-    public void QuickAttack(){
-        hitOrMiss = UnityEngine.Random.Range(0,100);
+        hitOrMiss = UnityEngine.Random.Range(1,101); // 1-100 range
 
         // hit
-        if(hitOrMiss<=quickProcent){
+        if(hitOrMiss<=chance){
             if(turnAction == Player){
-                AIHealth.currentHealth -= quickDamage;
-                CheckWin();
+                AIHealth.currentHealth -= damage;
             }
             else{
-                PlayerHealth.currentHealth -= quickDamage;
-                CheckWin();
+                PlayerHealth.currentHealth -= damage;
             }
+            CheckWin();
             CheckTurn();
         }
         // miss
         else{
             CheckTurn();
         }
+    }
+
+    public void QuickAttack(){
+        Attack(quickDamage,quickProcent);
     }
 
     public void NormalAttack(){
-        hitOrMiss = UnityEngine.Random.Range(0,100);
-
-        // hit
-        if(hitOrMiss<=normalProcent){
-            if(turnAction == Player){
-                AIHealth.currentHealth -= normalDamage;
-                CheckWin();
-            }
-            else{
-                PlayerHealth.currentHealth -= normalDamage;
-                CheckWin();
-            }
-            CheckTurn();
-        }
-        // miss
-        else{
-            CheckTurn();
-        }
+        Attack(normalDamage,normalProcent);
     }
 
     public void HeavyAttack(){
-        hitOrMiss = UnityEngine.Random.Range(0,100);
-
-        // hit
-        if(hitOrMiss<=heavyProcent){
-            if(turnAction == Player){
-                AIHealth.currentHealth -= heavyDamage;
-                CheckWin();
-            }
-            else{
-                PlayerHealth.currentHealth -= heavyDamage;
-                CheckWin();
-            }
-            CheckTurn();
-        }
-        // miss
-        else{
-            CheckTurn();
-        }
+        Attack(heavyDamage,heavyProcent);
     }
 
     private void CheckWin(){
+
+        //Debug.Log(turnAction);
         // Add ending screen or smth idk 💀
         if (AIHealth.currentHealth<=0){
             AIHealth.currentHealth = 0;
@@ -162,6 +131,12 @@ public class Actions : MonoBehaviour
             PlayerHealth.currentHealth = 0;
             Debug.Log("AI won! Fatality");
         }
+
+
+
+
+
+
     }
 
     public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players and switch inRange flag if distance in enough or not
