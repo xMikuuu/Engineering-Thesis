@@ -6,19 +6,22 @@ using UnityEngine.UI;
 
 public class Heavy : MonoBehaviour
 {
-    [SerializeField] public TMP_Text textElement;
-    [SerializeField] GameObject background;
+    [SerializeField] private TMP_Text actionInfo;
+    [SerializeField] private TMP_Text actionDetails;
+    [SerializeField] private GameObject book;
 
     [SerializeField] Actions stats;
 
     void OnMouseOver()
     {
-        textElement.text = "Attack:     Heavy\n"+"DMG:          "+stats.heavyDamage+"\n"+"% to hit:      "+stats.heavyProcent;
-        background.GetComponent<SpriteRenderer>().enabled = true;
+        actionInfo.text = "Attack:\n"+"DMG:\n"+"% to hit:";
+        actionDetails.text = "Heavy\n"+stats.heavyDamage+"\n"+stats.heavyProcent;
+        book.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
     {
-        textElement.text = "";
-        background.GetComponent<SpriteRenderer>().enabled = false;
+        actionInfo.text = "";
+        actionDetails.text = "";
+        book.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
