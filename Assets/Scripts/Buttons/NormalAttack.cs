@@ -4,31 +4,28 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class LeftButton : MonoBehaviour
+public class NormalAttack : MonoBehaviour
 {
-
-    [SerializeField] Actions Actions;
-    [SerializeField] PlayerActions PlayerActions;    
     [SerializeField] private TMP_Text actionInfo;
     [SerializeField] private TMP_Text actionDetails;
     [SerializeField] private GameObject book;
+    [SerializeField] Actions Actions;
+    [SerializeField] PlayerActions PlayerActions;
     [SerializeField] SpriteRenderer sprite;
 
     void Update(){
 
-        if(PlayerActions.leftButtonClickable==true){
-            sprite.color = Color.white;
+        if(PlayerActions.normalAttackClickable==true){
+            sprite.color = Color.yellow;
         }
         else{
             sprite.color = Color.black;
         }
     }
-
-
     void OnMouseOver()
     {
-        actionInfo.text = "Move:";
-        actionDetails.text = "Left";
+        actionInfo.text = "Attack:\n"+"DMG:\n"+"% to hit:";
+        actionDetails.text = "Normal\n"+Actions.normalDamage+"\n"+Actions.normalProcent;
         book.GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnMouseExit()
@@ -37,11 +34,12 @@ public class LeftButton : MonoBehaviour
         actionDetails.text = "";
         book.GetComponent<SpriteRenderer>().enabled = false;
     }
+
     void OnMouseDown()
     {
-        if(!PlayerActions.leftButtonClickable){
+        if(!PlayerActions.normalAttackClickable){
             return;
         }
-        Actions.MoveLeft();
+        Actions.NormalAttack();
     }
 }

@@ -14,10 +14,23 @@ public class AIActions : MonoBehaviour
     public static bool turnMade=false;
 
     [SerializeField] GameObject consoleBackground;
+
+
+    // variables for timer/delay
+    public static float time;
+    private float timeRemaining = 1;
+    public bool delay;
+    public bool turnOnDelay = false;
+
+
     void Update()
     {
+
+
+        OneSecondTimer();
+
         // Random movement left or right
-        if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false){
+        if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false && delay == false){
 
             consoleBackground.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -58,5 +71,36 @@ public class AIActions : MonoBehaviour
             turnMade=true;
         }
 
+    }
+
+
+
+
+    private void TurnDelay()
+    {
+        if (time > 1)
+        {
+            if (time % 2 == 0)
+            {
+                delay = false;
+            }
+        }
+    }
+
+    void OneSecondTimer(){
+        if(!turnOnDelay){
+            delay=false;
+            return;
+        }
+        if (timeRemaining>0)
+        {
+            timeRemaining-=Time.deltaTime;
+        }
+        else{
+            time+=1;
+            timeRemaining =1;
+            //Debug.Log(time);
+            TurnDelay();
+        }
     }
 }

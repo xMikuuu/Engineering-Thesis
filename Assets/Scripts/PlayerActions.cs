@@ -12,59 +12,115 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject AI;
 
 
-    // Movement buttons
-    [SerializeField] public Button quickAttackButton;
-    [SerializeField] public Button normalAttackButton;  
-    [SerializeField] public Button heavyAttackButton;  
+
+
+    // Movement buttons and attack buttons
     public bool rightButtonClickable;
     public bool leftButtonClickable;   
+    public bool quickAttackClickable;  
+    public bool normalAttackClickable; 
+    public bool heavyAttackClickable;   
+
+
+
+    // variables for timer/delay
+    public static float time;
+    private float timeRemaining = 1;
+    public bool delay;
+    private bool firstTurn=true;
+    public bool turnOnDelay = false;
+    //[SerializeField] DelayForTurns DelayForTurns;  
+
 
     void Update()
-    {       
-        // If its players turn:
-        if(Actions.turnAction==Player && Actions.gameFinished == false){
-            // Disable buttons if player is on the edge of the map
-            if(Player.transform.position.x == -(Actions.xBound)){
-                leftButtonClickable = false;
+    {        
+        if(firstTurn || !turnOnDelay){
+            //DelayForTurns.playerDelay=false;
+            delay=false;
+            firstTurn=false;
+            return;
+        }
+        else{
+
+            //DelayForTurns.OneSecondTimer();
+            OneSecondTimer();
+            
+            // If its players turn:
+            if(Actions.turnAction==Player && Actions.gameFinished == false && delay == false){
+
+                // Disable buttons if player is on the edge of the map
+                if(Player.transform.position.x == -(Actions.xBound)){
+                    leftButtonClickable = false;
+                }
+                else
+                {
+                    leftButtonClickable = true;
+                }
+
+                if(Player.transform.position.x == Actions.xBound){
+                    rightButtonClickable = false;
+                }
+                else
+                {
+                    rightButtonClickable = true;
+                }
+
+
+                if(Actions.inRange==true){
+                    quickAttackClickable = true; 
+                    normalAttackClickable = true; 
+                    heavyAttackClickable = true;
+                }
+                else{
+                    quickAttackClickable = false; 
+                    normalAttackClickable = false; 
+                    heavyAttackClickable = false;
+                }
             }
             else
+            //If its AI's turn: (turn off every button)
             {
-                leftButtonClickable = true;
-            }
-
-            if(Player.transform.position.x == Actions.xBound){
-                rightButtonClickable = false;
-            }
-            else
-            {
-                rightButtonClickable = true;
-            }
-
-
-            if(Actions.inRange==true){
-                quickAttackButton.interactable = true;
-                normalAttackButton.interactable = true;
-                heavyAttackButton.interactable = true;
-            }
-            else{
-                quickAttackButton.interactable = false;
-                normalAttackButton.interactable = false;
-                heavyAttackButton.interactable = false;
+                DisableAllButtons();
             }
         }
-        else
-        // If its AI's turn: (turn off every button)
+    }
+
+    private void TurnDelay()
+    {
+        if (time > 1)
         {
-            DisableAllButtons();
+            if (time % 2 == 0)
+            {
+                delay = false;
+            }
+        }
+    }
+
+    void OneSecondTimer(){
+
+        if(!turnOnDelay){
+            delay=false;
+            return;
+        }
+
+
+        if (timeRemaining>0)
+        {
+            timeRemaining-=Time.deltaTime;
+        }
+        else{
+            time+=1;
+            timeRemaining =1;
+            //Debug.Log(time);
+            TurnDelay();
         }
     }
 
     public void DisableAllButtons(){
         leftButtonClickable = false;
         rightButtonClickable = false;
-
-        quickAttackButton.interactable = false;
-        normalAttackButton.interactable = false;
-        heavyAttackButton.interactable = false;
+        quickAttackClickable = false; 
+        normalAttackClickable = false; 
+        heavyAttackClickable = false;
     }
 }

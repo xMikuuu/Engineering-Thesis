@@ -12,6 +12,20 @@ public class RightButton : MonoBehaviour
     [SerializeField] private TMP_Text actionInfo;
     [SerializeField] private TMP_Text actionDetails;
     [SerializeField] private GameObject book;
+    [SerializeField] SpriteRenderer sprite;
+
+    void Update(){
+
+        if(PlayerActions.rightButtonClickable==true){
+            sprite.color = Color.white;
+        }
+        else{
+            sprite.color = Color.black;
+        }
+    }
+
+
+
 
     void OnMouseOver()
     {

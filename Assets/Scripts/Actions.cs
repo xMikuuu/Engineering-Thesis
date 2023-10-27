@@ -16,7 +16,8 @@ public class Actions : MonoBehaviour
 
     [SerializeField] GameObject Player;
     [SerializeField] GameObject AI;  
-    [SerializeField] PlayerActions PlayerActions;      
+    [SerializeField] PlayerActions PlayerActions;
+    [SerializeField] AIActions AIActions;          
 
     private float speed = 2f; // movement speed
     private Vector2 target; // target position
@@ -110,6 +111,11 @@ public class Actions : MonoBehaviour
         }
         // miss
         else{
+
+            if(turnAction==Player){
+                Debug.Log("hehe");
+            }
+
             consoleText.text += "\nMissed!";
             CheckTurn();
             AIActions.turnMade=false;
@@ -186,9 +192,13 @@ public class Actions : MonoBehaviour
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
                 if(turnFlag==true){
+                    AIActions.delay = true;
+                    AIActions.time = 0;
                     turnAction = AI;
                 }
                 else{
+                    PlayerActions.delay = true;
+                    PlayerActions.time = 0;
                     turnAction = Player;
                 }
                 turnFlag = !turnFlag;    
