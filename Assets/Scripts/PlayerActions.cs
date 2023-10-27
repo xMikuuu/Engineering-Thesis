@@ -23,26 +23,23 @@ public class PlayerActions : MonoBehaviour
 
 
 
-    // variables for timer/delay
+        // variables for timer/delay
     public static float time;
     private float timeRemaining = 1;
     public bool delay;
     private bool firstTurn=true;
     public bool turnOnDelay = false;
-    //[SerializeField] DelayForTurns DelayForTurns;  
 
 
     void Update()
     {        
-        if(firstTurn || !turnOnDelay){
-            //DelayForTurns.playerDelay=false;
+        if(firstTurn){
             delay=false;
             firstTurn=false;
             return;
         }
         else{
 
-            //DelayForTurns.OneSecondTimer();
             OneSecondTimer();
             
             // If its players turn:
@@ -98,7 +95,7 @@ public class PlayerActions : MonoBehaviour
 
     void OneSecondTimer(){
 
-        if(!turnOnDelay){
+        if(turnOnDelay){
             delay=false;
             return;
         }

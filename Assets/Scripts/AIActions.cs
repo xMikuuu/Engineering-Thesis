@@ -88,7 +88,7 @@ public class AIActions : MonoBehaviour
     }
 
     void OneSecondTimer(){
-        if(!turnOnDelay){
+        if(turnOnDelay){
             delay=false;
             return;
         }
