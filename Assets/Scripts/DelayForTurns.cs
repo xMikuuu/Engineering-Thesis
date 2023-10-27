@@ -10,22 +10,16 @@ public class DelayForTurns : MonoBehaviour
     [SerializeField] AIActions AIActions;  
     
 
-
     void Update(){
-
         if(turnOnDelay==true){
             PlayerActions.turnOnDelay = false;
             AIActions.turnOnDelay = false;
             return;
         }
-        
-
         else{
             PlayerActions.turnOnDelay = true;
             AIActions.turnOnDelay = true;
         }
-
-
     }
 
 }
