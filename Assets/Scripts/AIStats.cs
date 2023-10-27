@@ -17,14 +17,13 @@ public class AIStats : MonoBehaviour
     public Gradient gradient; // gradient thingy to change colors
     [SerializeField] public int maxHealth; // maximum health AI can have
     public int currentHealth; // current AI health
-    // Start is called before the first frame update
+
     void Start()
     {
         currentHealth = maxHealth;
         SetHealth();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //OneSecondTimer();
@@ -33,7 +32,8 @@ public class AIStats : MonoBehaviour
         slider.value = currentHealth;
         healthBar.color = gradient.Evaluate(slider.normalizedValue);
     }
-
+    
+    // Set max health and a bar to right value
     public void SetHealth()
     {
         slider.maxValue = maxHealth;
@@ -60,10 +60,8 @@ public class AIStats : MonoBehaviour
         else{
             time+=1;
             timeRemaining =1;
-            //textElement.text = time.ToString();
             //Debug.Log(time);
-            //testDmg();
-            //MainCamera.orthographicSize += 0.005f;
+            testDmg();
         }
     }
 }

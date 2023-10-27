@@ -13,11 +13,13 @@ public class AIActions : MonoBehaviour
 
     public static bool turnMade=false;
 
-
+    [SerializeField] GameObject consoleBackground;
     void Update()
     {
         // Random movement left or right
         if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false){
+
+            consoleBackground.GetComponent<SpriteRenderer>().enabled = true;
 
             if (Actions.inRange == true){
                 randomMove = UnityEngine.Random.Range(0,5);

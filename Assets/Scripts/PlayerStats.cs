@@ -7,10 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-
     private static float time;
     private float timeRemaining = 1;
-
 
     // stuff for health etc
     [SerializeField] public TMP_Text hitpoints; // Display how much health player has left
@@ -19,7 +17,6 @@ public class PlayerStats : MonoBehaviour
     public Gradient gradient; // gradient thingy to change colors
     [SerializeField] public int maxHealth; // maximum health player can have
     public int currentHealth; // current player health
-    public bool inRange;
 
     void Start()
     {
@@ -34,15 +31,7 @@ public class PlayerStats : MonoBehaviour
         hitpoints.text = currentHealth.ToString();
         slider.value = currentHealth;
         healthBar.color = gradient.Evaluate(slider.normalizedValue);
-        // if(currentHealth==0){
-        //     Debug.Log("death");
-        // }
-        // else{
-        //     currentHealth-=1;
-        // }
-
     }
-
 
     // Set max health and a bar to right value
     public void SetHealth()
@@ -56,7 +45,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (time > 1)
         {
-            if (time % 2 == 0)
+            if (time % 1 == 0)
             {
                 currentHealth-=5;
             }
@@ -70,10 +59,8 @@ public class PlayerStats : MonoBehaviour
         else{
             time+=1;
             timeRemaining =1;
-            //textElement.text = time.ToString();
             //Debug.Log(time);
             testDmg();
-            //MainCamera.orthographicSize += 0.005f;
         }
     }
 
