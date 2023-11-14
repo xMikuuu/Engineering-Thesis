@@ -48,9 +48,11 @@ public class Actions : MonoBehaviour
     [SerializeField] public int heavyDamage;
     [SerializeField] public int heavyProcent;    
 
+    [SerializeField] public int healingPotionValue;     
+
     // health for both players
-    [SerializeField] PlayerStats PlayerHealth;
-    [SerializeField] AIStats AIHealth;   
+    [SerializeField] PlayerStats PlayerStats;
+    [SerializeField] AIStats AIStats;   
 
     // "console" to print AI actions
     [SerializeField] public TMP_Text consoleText;
@@ -100,10 +102,10 @@ public class Actions : MonoBehaviour
         // hit
         if(hitOrMiss<=chance){
             if(turnAction == Player){
-                AIHealth.currentHealth -= damage;
+                AIStats.currentHealth -= damage;
             }
             else{
-                PlayerHealth.currentHealth -= damage;
+                PlayerStats.currentHealth -= damage;
             }
             consoleText.text += "\nHit!";
             CheckWin();
@@ -111,49 +113,68 @@ public class Actions : MonoBehaviour
         }
         // miss
         else{
-
-            if(turnAction==Player){
-                Debug.Log("hehe");
-            }
-
             consoleText.text += "\nMissed!";
             CheckTurn();
             AIActions.turnMade=false;
         }
     }
 
+    // basic attacks
     public void QuickAttack(){
-        if(turnAction==AI){
-            consoleText.text = turnAction.name+" used Quick Attack!";
-        }
+        consoleText.text = turnAction.name+" used Quick Attack!";
         Attack(quickDamage,quickProcent);
     }
 
     public void NormalAttack(){
-        if(turnAction==AI){
-            consoleText.text = turnAction.name+" used Normal Attack!";
-        }
+        consoleText.text = turnAction.name+" used Normal Attack!";
         Attack(normalDamage,normalProcent);
     }
 
     public void HeavyAttack(){
-        if(turnAction==AI){
-            consoleText.text = turnAction.name+" used Heavy Attack!";
-        }
+        consoleText.text = turnAction.name+" used Heavy Attack!";
         Attack(heavyDamage,heavyProcent);
     }
 
+
+
+
+    // heal potion
+    public void HealPotion(){
+        consoleText.text = turnAction.name+" used Healing Potion!";
+        //AIHealth.currentHealth -= damage;
+        //turnAction.currentHealth+=50;
+        if(turnAction == Player){
+            PlayerStats.currentHealth += healingPotionValue;
+            if(PlayerStats.currentHealth>PlayerStats.maxHealth){
+                PlayerStats.currentHealth=PlayerStats.maxHealth;
+            }
+        }
+        else{
+            AIStats.currentHealth += healingPotionValue;
+            if(AIStats.currentHealth>AIStats.maxHealth){
+                AIStats.currentHealth=AIStats.maxHealth;
+            }
+        }
+
+        CheckTurn();
+        AIActions.turnMade=false;
+    }
+
+
+
+
+
     private void CheckWin(){
         // Add ending screen or smth idk 💀
-        if (AIHealth.currentHealth<=0){
-            AIHealth.currentHealth = 0;
+        if (AIStats.currentHealth<=0){
+            AIStats.currentHealth = 0;
             consoleText.text = turnAction.name+" Won! Fatality";
             turnAction = Player;
             gameFinished = true;
             PlayerActions.DisableAllButtons();
         }
-        if (PlayerHealth.currentHealth<=0){
-            PlayerHealth.currentHealth = 0;
+        if (PlayerStats.currentHealth<=0){
+            PlayerStats.currentHealth = 0;
             consoleText.text = turnAction.name+" Won! Fatality";
             turnAction = Player;
             gameFinished = true;
@@ -163,6 +184,8 @@ public class Actions : MonoBehaviour
             CheckTurn();
         }
     }
+
+
 
     public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players and switch inRange flag if distance in enough or not
         distance = Vector2.Distance(a, b);
@@ -177,17 +200,13 @@ public class Actions : MonoBehaviour
     public void MoveLeft(){ // functions to move left or right (from player perspective they are both called by button in game object)
         target = new Vector2(turnAction.transform.position.x-(float)DistanceToMove,turnAction.transform.position.y);
         isMovingLeft = true;
-        if(turnAction==AI){
-            consoleText.text = turnAction.name+" moved Left";
-        }
+        consoleText.text = turnAction.name+" moved Left";
     }
 
     public void MoveRight(){     
         target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
         isMovingRight = true;
-        if(turnAction==AI){
-            consoleText.text = turnAction.name+" moved Right";
-        }
+        consoleText.text = turnAction.name+" moved Right";
     }
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 

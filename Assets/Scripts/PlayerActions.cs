@@ -10,6 +10,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] Actions Actions;
     [SerializeField] GameObject Player;
     [SerializeField] GameObject AI;
+    [SerializeField] PlayerStats PlayerStats;
 
 
 
@@ -19,7 +20,8 @@ public class PlayerActions : MonoBehaviour
     public bool leftButtonClickable;   
     public bool quickAttackClickable;  
     public bool normalAttackClickable; 
-    public bool heavyAttackClickable;   
+    public bool heavyAttackClickable;
+    public bool healPotionClickable;  
 
 
 
@@ -73,6 +75,16 @@ public class PlayerActions : MonoBehaviour
                     normalAttackClickable = false; 
                     heavyAttackClickable = false;
                 }
+
+
+                if(PlayerStats.currentHealth<PlayerStats.maxHealth){
+                    healPotionClickable = true;
+                }
+                else{
+                    healPotionClickable = false;
+                }
+
+
             }
             else
             //If its AI's turn: (turn off every button)
@@ -119,5 +131,6 @@ public class PlayerActions : MonoBehaviour
         quickAttackClickable = false; 
         normalAttackClickable = false; 
         heavyAttackClickable = false;
+        healPotionClickable = false;
     }
 }

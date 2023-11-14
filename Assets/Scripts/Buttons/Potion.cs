@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class RightButton : MonoBehaviour
+public class Potion : MonoBehaviour
 {
 
     [SerializeField] Actions Actions;
@@ -13,10 +13,11 @@ public class RightButton : MonoBehaviour
     [SerializeField] private TMP_Text actionDetails;
     [SerializeField] private GameObject book;
     [SerializeField] SpriteRenderer sprite;
+    [SerializeField] PlayerStats PlayerStats;
 
     void Update(){
 
-        if(PlayerActions.rightButtonClickable==true){
+        if(PlayerActions.healPotionClickable==true){
             sprite.color = Color.white;
         }
         else{
@@ -26,21 +27,25 @@ public class RightButton : MonoBehaviour
 
     void OnMouseOver()
     {
-        actionInfo.text = "Move:";
-        actionDetails.text = "Right";
+        actionInfo.text = "Heal value:";
+        actionDetails.text = Actions.healingPotionValue.ToString();
         book.GetComponent<SpriteRenderer>().enabled = true;
     }
+
     void OnMouseExit()
     {
         actionInfo.text = "";
         actionDetails.text = "";
         book.GetComponent<SpriteRenderer>().enabled = false;
     }
+
     void OnMouseDown()
     {
-        if(!PlayerActions.rightButtonClickable){
+        if(!PlayerActions.healPotionClickable==true){
             return;
         }
-        Actions.MoveRight();
+        Actions.HealPotion();
     }
+
+
 }
