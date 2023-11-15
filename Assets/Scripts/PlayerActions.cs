@@ -11,7 +11,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject Player;
     [SerializeField] GameObject AI;
     [SerializeField] PlayerStats PlayerStats;
-
+    [SerializeField] GameObject consoleBackground;
 
 
 
@@ -21,7 +21,8 @@ public class PlayerActions : MonoBehaviour
     public bool quickAttackClickable;  
     public bool normalAttackClickable; 
     public bool heavyAttackClickable;
-    public bool healPotionClickable;  
+    public bool healPotionClickable;
+    public bool defensivestanceClickable;
 
 
 
@@ -47,6 +48,9 @@ public class PlayerActions : MonoBehaviour
             // If its players turn:
             if(Actions.turnAction==Player && Actions.gameFinished == false && delay == false){
 
+                PlayerStats.isDefensive = false;
+                consoleBackground.GetComponent<SpriteRenderer>().enabled = true;
+
                 // Disable buttons if player is on the edge of the map
                 if(Player.transform.position.x == -(Actions.xBound)){
                     leftButtonClickable = false;
@@ -69,11 +73,13 @@ public class PlayerActions : MonoBehaviour
                     quickAttackClickable = true; 
                     normalAttackClickable = true; 
                     heavyAttackClickable = true;
+                    defensivestanceClickable = true;
                 }
                 else{
                     quickAttackClickable = false; 
                     normalAttackClickable = false; 
                     heavyAttackClickable = false;
+                    defensivestanceClickable = false;
                 }
 
 
@@ -132,5 +138,6 @@ public class PlayerActions : MonoBehaviour
         normalAttackClickable = false; 
         heavyAttackClickable = false;
         healPotionClickable = false;
+        defensivestanceClickable = false;
     }
 }

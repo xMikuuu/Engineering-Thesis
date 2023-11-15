@@ -48,7 +48,8 @@ public class Actions : MonoBehaviour
     [SerializeField] public int heavyDamage;
     [SerializeField] public int heavyProcent;    
 
-    [SerializeField] public int healingPotionValue;     
+    [SerializeField] public int healingPotionValue;
+    [SerializeField] public int defensiveStanceProcent;      
 
     // health for both players
     [SerializeField] PlayerStats PlayerStats;
@@ -102,10 +103,21 @@ public class Actions : MonoBehaviour
         // hit
         if(hitOrMiss<=chance){
             if(turnAction == Player){
-                AIStats.currentHealth -= damage;
+                if(AIStats.isDefensive==true){
+                    //Debug.Log(47 - (47 * Actions.defensiveStanceProcent / 100));
+                    AIStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
+                }
+                else{
+                    AIStats.currentHealth -= damage;
+                }
             }
             else{
-                PlayerStats.currentHealth -= damage;
+                if(PlayerStats.isDefensive==true){
+                    PlayerStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
+                }
+                else{
+                    PlayerStats.currentHealth -= damage;
+                }
             }
             consoleText.text += "\nHit!";
             CheckWin();
@@ -154,6 +166,22 @@ public class Actions : MonoBehaviour
             if(AIStats.currentHealth>AIStats.maxHealth){
                 AIStats.currentHealth=AIStats.maxHealth;
             }
+        }
+
+        CheckTurn();
+        AIActions.turnMade=false;
+    }
+
+
+    // defensive stance (block X% of the damage taken)
+    public void DefensiveStanceAction(){
+        consoleText.text = turnAction.name+" took a defensive position!";
+
+        if(turnAction == Player){
+            PlayerStats.isDefensive = true;
+        }
+        else{
+            AIStats.isDefensive = true;
         }
 
         CheckTurn();

@@ -9,6 +9,7 @@ public class AIActions : MonoBehaviour
 {
     [SerializeField] Actions Actions;
     [SerializeField] GameObject AI;
+    [SerializeField] AIStats AIStats;
     private int randomMove;
 
     public static bool turnMade=false;
@@ -31,6 +32,8 @@ public class AIActions : MonoBehaviour
 
         // Random movement left or right
         if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false && delay == false){
+
+            AIStats.isDefensive = false;
 
             consoleBackground.GetComponent<SpriteRenderer>().enabled = true;
 

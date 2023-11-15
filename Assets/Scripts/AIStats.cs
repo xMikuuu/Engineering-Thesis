@@ -17,6 +17,7 @@ public class AIStats : MonoBehaviour
     public Gradient gradient; // gradient thingy to change colors
     [SerializeField] public int maxHealth; // maximum health AI can have
     public int currentHealth; // current AI health
+    public bool isDefensive;
 
     void Start()
     {

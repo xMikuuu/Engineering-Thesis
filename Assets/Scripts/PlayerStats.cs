@@ -17,6 +17,7 @@ public class PlayerStats : MonoBehaviour
     public Gradient gradient; // gradient thingy to change colors
     [SerializeField] public int maxHealth; // maximum health player can have
     public int currentHealth; // current player health
+    public bool isDefensive;
 
     void Start()
     {
