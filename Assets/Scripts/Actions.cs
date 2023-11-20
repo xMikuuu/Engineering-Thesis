@@ -68,7 +68,7 @@ public class Actions : MonoBehaviour
 
     void Update(){
         
-        CheckDistance(Player.transform.position,AI.transform.position);
+        //CheckDistance(Player.transform.position,AI.transform.position);
         // Check if player is currently moving if so, do this fancy functions
         if(isMovingLeft){
             if(target.x<-6.5f){
@@ -81,7 +81,7 @@ public class Actions : MonoBehaviour
                 isMovingLeft = false;
                 AIActions.turnMade=false;
             }
-            
+            CheckDistance(Player.transform.position,AI.transform.position);
         }
         if(isMovingRight){
             if(target.x>6.5f){
@@ -92,7 +92,8 @@ public class Actions : MonoBehaviour
                 CheckTurn();
                 isMovingRight = false;
                 AIActions.turnMade=false;
-            }       
+            }   
+            CheckDistance(Player.transform.position,AI.transform.position);    
         }
     }
 
