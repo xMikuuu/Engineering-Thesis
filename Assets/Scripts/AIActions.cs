@@ -129,13 +129,15 @@ public class AIActions : MonoBehaviour
         if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false && delay == false){
             AIStats.isDefensive = false;
 
-            chosenAction = Minimax.MinimaxFunction(0,0,true,hejka,1);
+            chosenAction = Minimax.MinimaxFunction(0,0,true,1);
 
             Actions.CheckTurn();
 
 
-            Debug.Log(chosenAction);
-            Debug.Log("------------");
+            //Debug.Log(chosenAction);
+            Debug.Log(Actions.AIStats.currentHealth);
+            //Debug.Log("Difference in health/Score: "+Minimax.score +"\n (0: draw, -X: Player is winning, +X: AI is winning)");
+            Debug.Log("\n");
 
 
             turnMade=true;

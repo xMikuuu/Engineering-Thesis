@@ -52,8 +52,8 @@ public class Actions : MonoBehaviour
     [SerializeField] public int defensiveStanceProcent;      
 
     // health for both players
-    [SerializeField] PlayerStats PlayerStats;
-    [SerializeField] AIStats AIStats;   
+    [SerializeField] public PlayerStats PlayerStats;
+    [SerializeField] public AIStats AIStats;   
 
     // "console" to print AI actions
     [SerializeField] public TMP_Text consoleText;

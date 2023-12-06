@@ -17,50 +17,84 @@ public class Minimax : MonoBehaviour
     // hard: 5 moves ahead
 
 
-    [SerializeField] AIActions AIActions;
-    [SerializeField] AIStats AIStats;
-    [SerializeField] PlayerStats PlayerStats;  
+    // [SerializeField] AIActions AIActions;
+    // [SerializeField] AIStats AIStats;
+    // [SerializeField] PlayerStats PlayerStats;  
+    //[SerializeField] Actions Actions;  
 
+    //private Dictionary<string, bool> ListOfAvailableActions = new Dictionary<string, bool>();
 
-    private Dictionary<string, bool> ListOfAvailableActions = new Dictionary<string, bool>();
-
-
-    private int healthDifference; // AIStats.currentHealt - PlayerStats.currentHealth;
+    int ListOfAvailableActions=2;
+    //public int healthDifference; // AIStats.currentHealt - PlayerStats.currentHealth;
 
     // private List<int> hejka = new List<int>{12,1,34,7,8,46,78};
-    private int chosenAction;
-
+    private int temp;
+    public int score = 0;
     // void Update(){
     //     healthDifference = AIStats.currentHealth-PlayerStats.currentHealth;
     //     Debug.Log("Różnica w zdrowiu: "+healthDifference);
     //     Debug.Log("Ilość dostępnych ruchów dla AI: "+ListOfAvailableActions.Count);
     // }
 
+// nowy plik z przypisanym AI/Players stats z statystykami aktualnymi
+
+// lista z funkcjami Actions, w minimax odwoływać się do danej pozycji tej listy, <-
+// tam stany każdej możliwej akcji będą zapisane, i w danym stanie liczony ten score
 
 
-    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, List<int> score, int h){
 
-        ListOfAvailableActions = AIActions.ListOfActions.Where(pair => pair.Value == true).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+
+
+
+
+    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h){
+
+        // 1. liczenie indexu listy (depth,height,nodeindex tutaj jakieś działanie)
+        // 2. liczenie indexu rodzica
+        // 3. wczytanie stanu rodzica -> punkt drugi
+        // 4. wykonanie akcji zależnej od nodeIndex, if nodeIndex= 0 to coś, zmiana stanu z punktu 1
+        // 5.
+
+        // new dictionary without currently unavailable options
+        //ListOfAvailableActions = AIActions.ListOfActions.Where(pair => pair.Value == true).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+
+        // foreach (var pair in ListOfAvailableActions)
+        // {
+        //     Debug.Log($"Klucz: {pair.Key}, Wartość: {pair.Value}");
+        // }
+        //Debug.Log(ListOfAvailableActions);
+
         if (depth == h){      
-            healthDifference = AIStats.currentHealth-PlayerStats.currentHealth;
-            Debug.Log("Różnica w zdrowiu: "+healthDifference);
-            Debug.Log("Ilość dostępnych ruchów dla AI: "+ListOfAvailableActions.Count);   
-            return score[nodeIndex];
+            score = Actions.AIStats.currentHealth-Actions.PlayerStats.currentHealth; // nwm czy on tutaj powinien sie update'ować
+            Debug.Log("Available moves for AI: "+ListOfAvailableActions);   //.count
+            return score;
+            // dodać że returnuje też akcje daną żeby potem mógł ją wykonać
+
+            //return score[nodeIndex];
         }
 
         if(isMax){
-            chosenAction = int.MinValue;
-            for (int i = 0; i < ListOfAvailableActions.Count; i++) {
-                chosenAction = Math.Max(chosenAction, MinimaxFunction(depth+1,i,false,score,h));
+            temp = int.MinValue;
+            for (int i = 0; i < ListOfAvailableActions; i++) { //.count
+                // tutaj dać score outcome'u danej akcji (?)
+                 // dodać że returnuje też akcje daną żeby potem mógł ją wykonać
+                Debug.Log(i);
+                temp = Math.Max(temp, MinimaxFunction(depth+1,i,false,h));
             }
-            return chosenAction;
+            return temp;
+
         }
         else{
-            chosenAction = int.MaxValue;
-            for (int i = 0; i < ListOfAvailableActions.Count; i++) {
-                chosenAction = Math.Min(chosenAction, MinimaxFunction(depth+1,i,true,score,h));
+            temp = int.MaxValue;
+            for (int i = 0; i < ListOfAvailableActions; i++) { //. count
+                // tutaj dać score outcome'u danej akcji (?)
+
+                temp = Math.Min(temp, MinimaxFunction(depth+1,i,true,h));
+
             }
-            return chosenAction;
+            return temp;
         }
     }
 
@@ -85,7 +119,7 @@ public class Minimax : MonoBehaviour
 
         // Debug.Log("Wybrana liczba "+chosenAction);
         // Debug.Log("-----");
-    }
+    
 
 
     // void Update(){
@@ -116,3 +150,4 @@ public class Minimax : MonoBehaviour
 
 //}
 
+}
