@@ -36,15 +36,67 @@ public class Minimax : MonoBehaviour
     //     Debug.Log("Ilość dostępnych ruchów dla AI: "+ListOfAvailableActions.Count);
     // }
 
-// nowy plik z przypisanym AI/Players stats z statystykami aktualnymi
 
+    // private List<Action> ActionsList = new List<Action>(){
+    //     Actions.MoveLeft()
+    // };
+
+    // //public delegate void Delegate();
+    // //private List<Action> listOfActions = new List<Action>();
+
+    // Actions actions = new Actions();
+
+
+
+    
+
+    //public delegate void MoveLeftDelegate();
+
+
+    //Actions actions = GameObject.AddComponent<Actions>();
+
+
+
+
+    // private Delegate delegateMoveLeft = actions.MoveLeft();
+
+
+    // private List<Delegate> listOfActions = new List<Delegate>(){
+    //     delegateMoveLeft
+    // };
+
+
+
+// nowy plik z przypisanym AI/Players stats z statystykami aktualnymi
 // lista z funkcjami Actions, w minimax odwoływać się do danej pozycji tej listy, <-
 // tam stany każdej możliwej akcji będą zapisane, i w danym stanie liczony ten score
 
 
+// w minimaxie 7 forów po liście Actions,
+   // public void Invoke (Action method){}
+
+
+    private List<int> test = new List<int>{
+                 0,
+    1,      2,       3,        4,
+  5,6,7,  8,9,10, 11,12,13, 14,15,16};
 
 
 
+    void Awake(){
+        //Debug.Log(actions);
+        // for(int i=0;i<test.Count;i++)
+        // {
+        // Debug.Log(test[i]);
+        // }
+        //Action a = () => Actions.MoveLeft();
+        //Invoke(Actions.MoveLeft());
+        // listOfActions.Add(Invoke(() => Actions.MoveLeft()));
+    }
+
+    // private void test2(){
+    //     Debug.Log("test");
+    // }
 
 
 
@@ -68,19 +120,22 @@ public class Minimax : MonoBehaviour
 
         if (depth == h){      
             score = Actions.AIStats.currentHealth-Actions.PlayerStats.currentHealth; // nwm czy on tutaj powinien sie update'ować
-            Debug.Log("Available moves for AI: "+ListOfAvailableActions);   //.count
+            //Debug.Log("Available moves for AI: "+ListOfAvailableActions);   //.count
             return score;
             // dodać że returnuje też akcje daną żeby potem mógł ją wykonać
 
             //return score[nodeIndex];
         }
 
+        //if (czy akcja moze byc wykonana) jak moze byc wykoonana to wykonuje
+
         if(isMax){
             temp = int.MinValue;
-            for (int i = 0; i < ListOfAvailableActions; i++) { //.count
+            for (int i = 0; i < test.Count; i++) { //.count zmienić test na ActionsList czy cos
                 // tutaj dać score outcome'u danej akcji (?)
                  // dodać że returnuje też akcje daną żeby potem mógł ją wykonać
-                Debug.Log(i);
+                //Debug.Log(i);
+                
                 temp = Math.Max(temp, MinimaxFunction(depth+1,i,false,h));
             }
             return temp;

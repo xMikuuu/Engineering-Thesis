@@ -6,6 +6,8 @@ using System;
 using UnityEngine.UI;
 
 
+
+
 public class Actions : MonoBehaviour
 {
     // 0 = Player
@@ -19,7 +21,7 @@ public class Actions : MonoBehaviour
     [SerializeField] PlayerActions PlayerActions;
     [SerializeField] AIActions AIActions;          
 
-    private float speed = 2f; // movement speed
+    private float speed = 1f; // movement speed
     private Vector2 target; // target position
     private float step; // movement step
 
@@ -59,15 +61,107 @@ public class Actions : MonoBehaviour
     [SerializeField] public TMP_Text consoleText;
     [SerializeField] GameObject consoleBackground;
 
+    // delegate void MoveLeftDelegate();
+    //Action MoveLeftAction = () => delegate void MoveLeft;
+    // Action MoveLeftAction = MoveLeft;
+    //public List<Action> ActionsList = new List<Action>();
+    //     MoveLeft
+    // };
+
+    //ActionsList.Add(new Action(()=>{MoveLeft();}));
+
+
+
+    public virtual void ExecuteAction()
+    {
+    }
+    
+    public class MoveLeftAction : Actions{
+        public override void ExecuteAction()
+        {
+            MoveLeft();
+            base.ExecuteAction();
+        }
+    }
+    public class MoveRightAction : Actions{
+        public override void ExecuteAction()
+        {
+            MoveRight();
+            base.ExecuteAction();
+        }
+    }
+
+
+
+    //public List<Actions> listOfActions = new List<Actions>();
+
+    //listOfActions.Add(new MoveRightAction());
+    // {
+    //     new MoveRightAction()
+    // };
+
+// 7 klas które dziedziczą dane akcje, i obiekty tych klas do listy
+    public List<Actions> listOfActions = new List<Actions>();
 
     void Awake(){
         CheckTurn();
         step = speed * Time.deltaTime;
+
+
+        //listOfActions.Add(new MoveLeftAction()); 
+
+        MoveRightAction moveRightObj = new MoveRightAction();
+        //MoveLeftAction.consoleText = consoleText;
+        moveRightObj.consoleText = consoleText;
+
+
+        listOfActions.Add(moveRightObj);
+
+        // MoveRightAction.consoleText.text = "test2";
+
+        listOfActions[0].ExecuteAction();
+
+        // foreach(var action in listOfActions){
+        //     action.ExecuteAction();
+        // }
+        //consoleText.text = "0";
+        //Debug.Log(consoleText.text);
+
+        //MoveRightAction moveRightObj = new MoveRightAction();
+        //moveRightObj.MoveRight();
+
+        //listOfActions.Add(moveRightObj);
+
+        //listOfActions[0];
+
+        //Debug.Log(listOfActions.Count); // Printuje 1
+
+
+
+        // ActionsList.Add(new Action(()=>{MoveLeft();}));
+        // ActionsList.Add(new Action(()=>{MoveRight();}));        
+        // ActionsList.Add(new Action(()=>{QuickAttack();}));
+        // ActionsList.Add(new Action(()=>{NormalAttack();}));
+        // ActionsList.Add(new Action(()=>{HeavyAttack();}));
+        // ActionsList.Add(new Action(()=>{HealPotion();}));
+        // ActionsList.Add(new Action(()=>{DefensiveStanceAction();}));
+
+        // //Debug.Log(ActionsList[0]);
+        // for(int i=0;i<ActionsList.Count;i++){
+        //     Debug.Log(ActionsList[i]);
+        // }
+
+        //ActionsList[0]();
+
+
+        // CheckTurn();
+        // step = speed * Time.deltaTime;
         //consoleBackground.GetComponent<SpriteRenderer>().enabled = true; // turn on background of the console
     }
 
     void Update(){
-        
+
+        //Debug.Log(MoveLeft());
         //CheckDistance(Player.transform.position,AI.transform.position);
         // Check if player is currently moving if so, do this fancy functions
         if(isMovingLeft){
@@ -97,7 +191,7 @@ public class Actions : MonoBehaviour
         }
     }
 
-    private void Attack(int damage,int chance){
+    public void Attack(int damage,int chance){
 
         hitOrMiss = UnityEngine.Random.Range(1,101); // 1-100 range
 
@@ -148,9 +242,6 @@ public class Actions : MonoBehaviour
         Attack(heavyDamage,heavyProcent);
     }
 
-
-
-
     // heal potion
     public void HealPotion(){
         consoleText.text = turnAction.name+" used Healing Potion!";
@@ -173,7 +264,6 @@ public class Actions : MonoBehaviour
         AIActions.turnMade=false;
     }
 
-
     // defensive stance (block X% of the damage taken)
     public void DefensiveStanceAction(){
         consoleText.text = turnAction.name+" took a defensive position!";
@@ -189,11 +279,7 @@ public class Actions : MonoBehaviour
         AIActions.turnMade=false;
     }
 
-
-
-
-
-    private void CheckWin(){
+    public void CheckWin(){
         // Add ending screen or smth idk 💀
         if (AIStats.currentHealth<=0){
             AIStats.currentHealth = 0;
@@ -213,8 +299,6 @@ public class Actions : MonoBehaviour
             CheckTurn();
         }
     }
-
-
 
     public void CheckDistance(Vector2 a, Vector2 b){ // check distance between players and switch inRange flag if distance in enough or not
         distance = Vector2.Distance(a, b);
@@ -236,7 +320,16 @@ public class Actions : MonoBehaviour
         target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
         isMovingRight = true;
         consoleText.text = turnAction.name+" moved Right";
+        // Debug.Log(turnAction.name+" moved Right");
+        // Debug.Log(consoleText);
+        // Debug.Log(consoleText.text);
+        //consoleText.text = turnAction.name+" moved Right";
+        //Debug.Log(turnAction.name+" moved Right");
+        //Debug.Log(consoleText);
     }
+
+
+
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
                 if(turnFlag==true){

@@ -925,7 +925,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: ' test'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3216,10 +3216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depth: 0
   Actions: {fileID: 1910600633}
-  AIActions: {fileID: 667726198}
-  AIStats: {fileID: 667726197}
-  PlayerStats: {fileID: 771400302}
-  chosenAction: 0
+  score: 0
 --- !u!1 &1316190462
 GameObject:
   m_ObjectHideFlags: 0
@@ -3974,6 +3971,7 @@ MonoBehaviour:
   AIStats: {fileID: 667726197}
   consoleText: {fileID: 362330913}
   consoleBackground: {fileID: 623303524}
+  listOfActions: []
 --- !u!114 &1910600634
 MonoBehaviour:
   m_ObjectHideFlags: 0
