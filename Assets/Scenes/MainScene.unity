@@ -925,7 +925,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' test'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3955,10 +3955,15 @@ MonoBehaviour:
   AI: {fileID: 667726195}
   PlayerActions: {fileID: 771400303}
   AIActions: {fileID: 667726198}
+  speed: 1
+  step: 0
   xBound: 6.5
   DistanceToMove: 1
+  distance: 0
   attackRange: 3
   inRange: 0
+  hitOrMiss: 0
+  hitOrMissString: 
   quickDamage: 34
   quickProcent: 50
   normalDamage: 50

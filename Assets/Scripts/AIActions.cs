@@ -130,11 +130,12 @@ public class AIActions : MonoBehaviour
             AIStats.isDefensive = false;
 
 
+            Actions.listOfActions[0].ExecuteAction();
             //Actions.listOfActions[0].ExecuteAction();
 
             chosenAction = Minimax.MinimaxFunction(0,0,true,1);
 
-            Actions.CheckTurn();
+            //Actions.CheckTurn();
 
 
             //Debug.Log(chosenAction);

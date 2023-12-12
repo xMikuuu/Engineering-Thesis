@@ -16,30 +16,31 @@ public class Actions : MonoBehaviour
     public static GameObject turnAction; // variable to which it assigns the current object
     public bool gameFinished = false;
 
-    [SerializeField] GameObject Player;
-    [SerializeField] GameObject AI;  
-    [SerializeField] PlayerActions PlayerActions;
-    [SerializeField] AIActions AIActions;          
+    [SerializeField] public GameObject Player;
+    [SerializeField] public GameObject AI;  
+    [SerializeField] public PlayerActions PlayerActions;
+    [SerializeField] public AIActions AIActions;   
 
-    private float speed = 1f; // movement speed
-    private Vector2 target; // target position
-    private float step; // movement step
 
-    private static bool isMovingLeft;
-    private static bool isMovingRight;
+    public float speed = 1f; // movement speed
+    public static Vector2 target; // target position 
+    public float step; // movement step
+
+    public static bool isMovingLeft;
+    public static bool isMovingRight;
 
     // X bound is: <-6.5;6.5>
     [SerializeField] public double xBound;
     [SerializeField] public double DistanceToMove;
 
     // Distance for attacks
-    private float distance; // check distance between players
-    [SerializeField] double attackRange; // range of attacks 
+    public float distance; // check distance between players
+    [SerializeField] public double attackRange; // range of attacks 
     public bool inRange; // i think i dont have to comment that one 💀
 
     // variables for attacks
-    private int hitOrMiss; // variable to check if u hit or miss
-    private string hitOrMissString;  // variable to prompt miss or hit
+    public int hitOrMiss; // variable to check if u hit or miss
+    public string hitOrMissString;  // variable to prompt miss or hit
 
     [SerializeField] public int quickDamage;
     [SerializeField] public int quickProcent;
@@ -59,7 +60,7 @@ public class Actions : MonoBehaviour
 
     // "console" to print AI actions
     [SerializeField] public TMP_Text consoleText;
-    [SerializeField] GameObject consoleBackground;
+    [SerializeField] public GameObject consoleBackground;
 
     // delegate void MoveLeftDelegate();
     //Action MoveLeftAction = () => delegate void MoveLeft;
@@ -84,6 +85,7 @@ public class Actions : MonoBehaviour
         }
     }
     public class MoveRightAction : Actions{
+        //public static bool isMovingRight;
         public override void ExecuteAction()
         {
             MoveRight();
@@ -113,6 +115,18 @@ public class Actions : MonoBehaviour
         MoveRightAction moveRightObj = new MoveRightAction();
         //MoveLeftAction.consoleText = consoleText;
         moveRightObj.consoleText = consoleText;
+        //moveRightObj.target = target;
+        //moveRightObj.turnAction = Actions.turnAction;
+        
+
+
+        moveRightObj.DistanceToMove = DistanceToMove;
+
+        //moveRightObj.isMovingRight = Actions.isMovingRight;
+
+        // moveRightObj.speed = speed;
+        // moveRightObj.step = step;
+
 
 
         listOfActions.Add(moveRightObj);
@@ -160,7 +174,7 @@ public class Actions : MonoBehaviour
     }
 
     void Update(){
-
+        //Debug.Log(turnAction.name);
         //Debug.Log(MoveLeft());
         //CheckDistance(Player.transform.position,AI.transform.position);
         // Check if player is currently moving if so, do this fancy functions
@@ -182,7 +196,9 @@ public class Actions : MonoBehaviour
                 target.x = 6.5f;
             }
             turnAction.transform.position = Vector2.MoveTowards(turnAction.transform.position,target,step);
+
             if(target.x==turnAction.transform.position.x){
+                Debug.Log("wchodzi");
                 CheckTurn();
                 isMovingRight = false;
                 AIActions.turnMade=false;
@@ -318,6 +334,7 @@ public class Actions : MonoBehaviour
 
     public void MoveRight(){     
         target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
+        Debug.Log(target);
         isMovingRight = true;
         consoleText.text = turnAction.name+" moved Right";
         // Debug.Log(turnAction.name+" moved Right");
@@ -332,6 +349,7 @@ public class Actions : MonoBehaviour
 
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
+                Debug.Log(turnFlag);
                 if(turnFlag==true){
                     AIActions.delay = true;
                     AIActions.time = 0;
