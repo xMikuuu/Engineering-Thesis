@@ -5,16 +5,13 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 
-
-
-
 public class Actions : MonoBehaviour
 {
     // 0 = Player
     // 1 = AI
     public static bool turnFlag;
     public static GameObject turnAction; // variable to which it assigns the current object
-    public bool gameFinished = false;
+    public static bool gameFinished = false;
 
     [SerializeField] public GameObject Player;
     [SerializeField] public GameObject AI;  
@@ -42,17 +39,17 @@ public class Actions : MonoBehaviour
     public int hitOrMiss; // variable to check if u hit or miss
     public string hitOrMissString;  // variable to prompt miss or hit
 
-    [SerializeField] public int quickDamage;
-    [SerializeField] public int quickProcent;
+    [SerializeField] public  int quickDamage;
+    [SerializeField] public  int quickProcent;
 
-    [SerializeField] public int normalDamage;
-    [SerializeField] public int normalProcent;
+    [SerializeField] public  int normalDamage;
+    [SerializeField] public  int normalProcent;
 
-    [SerializeField] public int heavyDamage;
-    [SerializeField] public int heavyProcent;    
+    [SerializeField] public  int heavyDamage;
+    [SerializeField] public  int heavyProcent;    
 
-    [SerializeField] public int healingPotionValue;
-    [SerializeField] public int defensiveStanceProcent;      
+    [SerializeField] public  int healingPotionValue;
+    [SerializeField] public  int defensiveStanceProcent;      
 
     // health for both players
     [SerializeField] public PlayerStats PlayerStats;
@@ -85,7 +82,6 @@ public class Actions : MonoBehaviour
         }
     }
     public class MoveRightAction : Actions{
-        //public static bool isMovingRight;
         public override void ExecuteAction()
         {
             MoveRight();
@@ -93,14 +89,48 @@ public class Actions : MonoBehaviour
         }
     }
 
+    public class QuickAttackAction : Actions{
+        public override void ExecuteAction()
+        {
+            QuickAttack();
+            base.ExecuteAction();
+        }
+    }
+
+    public class NormalAttackAction : Actions{
+        public override void ExecuteAction()
+        {
+            NormalAttack();
+            base.ExecuteAction();
+        }
+    }
+
+    public class HeavyAttackAction : Actions{
+        public override void ExecuteAction()
+        {
+            HeavyAttack();
+            base.ExecuteAction();
+        }
+    }
+
+    public class HealPotionAction : Actions{
+        public override void ExecuteAction()
+        {
+            HealPotion();
+            base.ExecuteAction();
+        }
+    }
+
+    public class DefensiveStanceActionn : Actions{
+        public override void ExecuteAction()
+        {
+            DefensiveStanceAction();
+            base.ExecuteAction();
+        }
+    }
 
 
-    //public List<Actions> listOfActions = new List<Actions>();
 
-    //listOfActions.Add(new MoveRightAction());
-    // {
-    //     new MoveRightAction()
-    // };
 
 // 7 klas które dziedziczą dane akcje, i obiekty tych klas do listy
     public List<Actions> listOfActions = new List<Actions>();
@@ -109,75 +139,104 @@ public class Actions : MonoBehaviour
         CheckTurn();
         step = speed * Time.deltaTime;
 
-
-        //listOfActions.Add(new MoveLeftAction()); 
-
         MoveRightAction moveRightObj = new MoveRightAction();
-        //MoveLeftAction.consoleText = consoleText;
         moveRightObj.consoleText = consoleText;
-        //moveRightObj.target = target;
-        //moveRightObj.turnAction = Actions.turnAction;
-        
-
-
         moveRightObj.DistanceToMove = DistanceToMove;
 
-        //moveRightObj.isMovingRight = Actions.isMovingRight;
+        MoveLeftAction moveLeftObj= new MoveLeftAction();
+        moveLeftObj.consoleText = consoleText;
+        moveLeftObj.DistanceToMove = DistanceToMove;
 
-        // moveRightObj.speed = speed;
-        // moveRightObj.step = step;
+
+        QuickAttackAction quickAttackObj = new QuickAttackAction();
+        quickAttackObj.consoleText = consoleText;
+        quickAttackObj.quickDamage = quickDamage;
+        quickAttackObj.quickProcent = quickProcent;
+
+        quickAttackObj.AI = AI;
+        quickAttackObj.Player = Player;
+
+        quickAttackObj.AIStats = AIStats;
+        quickAttackObj.PlayerStats = PlayerStats;
+
+        quickAttackObj.AIActions = AIActions;
+        quickAttackObj.PlayerActions = PlayerActions;
+
+
+        NormalAttackAction normalAttackObj = new NormalAttackAction();
+        normalAttackObj.consoleText = consoleText;
+        normalAttackObj.normalDamage = normalDamage;
+        normalAttackObj.normalProcent = normalProcent;
+
+        normalAttackObj.AI = AI;
+        normalAttackObj.Player = Player;
+
+        normalAttackObj.AIStats = AIStats;
+        normalAttackObj.PlayerStats = PlayerStats;
+
+        normalAttackObj.AIActions = AIActions;
+        normalAttackObj.PlayerActions = PlayerActions;
+
+        HeavyAttackAction heavyAttackObj = new HeavyAttackAction();
+        heavyAttackObj.consoleText = consoleText;
+        heavyAttackObj.heavyDamage = heavyDamage;
+        heavyAttackObj.heavyProcent = heavyProcent;
+
+        heavyAttackObj.AI = AI;
+        heavyAttackObj.Player = Player;
+
+        heavyAttackObj.AIStats = AIStats;
+        heavyAttackObj.PlayerStats = PlayerStats;
+
+        heavyAttackObj.AIActions = AIActions;
+        heavyAttackObj.PlayerActions = PlayerActions;
+   
+        HealPotionAction healPotionObj = new HealPotionAction();
+        healPotionObj.consoleText = consoleText;
+        healPotionObj.healingPotionValue = healingPotionValue;
+
+        healPotionObj.AI = AI;
+        healPotionObj.Player = Player;
+
+        healPotionObj.AIStats = AIStats;
+        healPotionObj.PlayerStats = PlayerStats;
+
+        healPotionObj.AIActions = AIActions;
+        healPotionObj.PlayerActions = PlayerActions;
+
+        DefensiveStanceActionn defensivestanceObj = new DefensiveStanceActionn();
+        defensivestanceObj.consoleText = consoleText;
+        defensivestanceObj.defensiveStanceProcent = defensiveStanceProcent;
+
+        defensivestanceObj.AI = AI;
+        defensivestanceObj.Player = Player;
+
+        defensivestanceObj.AIStats = AIStats;
+        defensivestanceObj.PlayerStats = PlayerStats;
+
+        defensivestanceObj.AIActions = AIActions;
+        defensivestanceObj.PlayerActions = PlayerActions;
 
 
 
         listOfActions.Add(moveRightObj);
+        listOfActions.Add(moveLeftObj);  
 
-        // MoveRightAction.consoleText.text = "test2";
+        listOfActions.Add(quickAttackObj);   
+        listOfActions.Add(normalAttackObj); 
+        listOfActions.Add(heavyAttackObj);
+
+        listOfActions.Add(healPotionObj); 
+        listOfActions.Add(defensivestanceObj);        
 
         listOfActions[0].ExecuteAction();
-
-        // foreach(var action in listOfActions){
-        //     action.ExecuteAction();
-        // }
-        //consoleText.text = "0";
-        //Debug.Log(consoleText.text);
-
-        //MoveRightAction moveRightObj = new MoveRightAction();
-        //moveRightObj.MoveRight();
-
-        //listOfActions.Add(moveRightObj);
-
-        //listOfActions[0];
-
-        //Debug.Log(listOfActions.Count); // Printuje 1
-
-
-
-        // ActionsList.Add(new Action(()=>{MoveLeft();}));
-        // ActionsList.Add(new Action(()=>{MoveRight();}));        
-        // ActionsList.Add(new Action(()=>{QuickAttack();}));
-        // ActionsList.Add(new Action(()=>{NormalAttack();}));
-        // ActionsList.Add(new Action(()=>{HeavyAttack();}));
-        // ActionsList.Add(new Action(()=>{HealPotion();}));
-        // ActionsList.Add(new Action(()=>{DefensiveStanceAction();}));
-
-        // //Debug.Log(ActionsList[0]);
-        // for(int i=0;i<ActionsList.Count;i++){
-        //     Debug.Log(ActionsList[i]);
-        // }
-
-        //ActionsList[0]();
-
-
-        // CheckTurn();
-        // step = speed * Time.deltaTime;
-        //consoleBackground.GetComponent<SpriteRenderer>().enabled = true; // turn on background of the console
     }
 
     void Update(){
         //Debug.Log(turnAction.name);
-        //Debug.Log(MoveLeft());
         //CheckDistance(Player.transform.position,AI.transform.position);
         // Check if player is currently moving if so, do this fancy functions
+
         if(isMovingLeft){
             if(target.x<-6.5f){
                 target.x = -6.5f;
@@ -198,7 +257,6 @@ public class Actions : MonoBehaviour
             turnAction.transform.position = Vector2.MoveTowards(turnAction.transform.position,target,step);
 
             if(target.x==turnAction.transform.position.x){
-                Debug.Log("wchodzi");
                 CheckTurn();
                 isMovingRight = false;
                 AIActions.turnMade=false;
@@ -208,14 +266,14 @@ public class Actions : MonoBehaviour
     }
 
     public void Attack(int damage,int chance){
-
         hitOrMiss = UnityEngine.Random.Range(1,101); // 1-100 range
-
         // hit
         if(hitOrMiss<=chance){
+
+
             if(turnAction == Player){
+                //Debug.Log("Player atakuje");
                 if(AIStats.isDefensive==true){
-                    //Debug.Log(47 - (47 * Actions.defensiveStanceProcent / 100));
                     AIStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
                 }
                 else{
@@ -223,6 +281,7 @@ public class Actions : MonoBehaviour
                 }
             }
             else{
+                //Debug.Log("AI atakuje");
                 if(PlayerStats.isDefensive==true){
                     PlayerStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
                 }
@@ -261,8 +320,6 @@ public class Actions : MonoBehaviour
     // heal potion
     public void HealPotion(){
         consoleText.text = turnAction.name+" used Healing Potion!";
-        //AIHealth.currentHealth -= damage;
-        //turnAction.currentHealth+=50;
         if(turnAction == Player){
             PlayerStats.currentHealth += healingPotionValue;
             if(PlayerStats.currentHealth>PlayerStats.maxHealth){
@@ -334,22 +391,15 @@ public class Actions : MonoBehaviour
 
     public void MoveRight(){     
         target = new Vector2(turnAction.transform.position.x+(float)DistanceToMove,turnAction.transform.position.y);
-        Debug.Log(target);
         isMovingRight = true;
         consoleText.text = turnAction.name+" moved Right";
-        // Debug.Log(turnAction.name+" moved Right");
-        // Debug.Log(consoleText);
-        // Debug.Log(consoleText.text);
-        //consoleText.text = turnAction.name+" moved Right";
-        //Debug.Log(turnAction.name+" moved Right");
-        //Debug.Log(consoleText);
     }
 
 
 
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
-                Debug.Log(turnFlag);
+                //Debug.Log(turnFlag);
                 if(turnFlag==true){
                     AIActions.delay = true;
                     AIActions.time = 0;

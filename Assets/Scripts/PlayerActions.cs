@@ -48,6 +48,9 @@ public class PlayerActions : MonoBehaviour
             // If its players turn:
             if(Actions.turnAction==Player && Actions.gameFinished == false && delay == false){
 
+
+                //Actions.listOfActions[0].ExecuteAction();
+
                 PlayerStats.isDefensive = false;
                 consoleBackground.GetComponent<SpriteRenderer>().enabled = true;
 

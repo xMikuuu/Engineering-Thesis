@@ -2037,7 +2037,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   maxHealth: 100
-  currentHealth: 0
+  currentHealth: 100
   isDefensive: 0
 --- !u!114 &667726198
 MonoBehaviour:
@@ -2056,8 +2056,9 @@ MonoBehaviour:
   AIStats: {fileID: 667726197}
   Minimax: {fileID: 1258151622}
   consoleBackground: {fileID: 623303524}
-  delay: 0
-  turnOnDelay: 0
+  randomMove: 0
+  hejka: 0c000000010000002200000007000000080000000a0000004e000000
+  chosenAction: 0
 --- !u!61 &667726199
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2445,7 +2446,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   maxHealth: 100
-  currentHealth: 0
+  currentHealth: 100
   isDefensive: 0
 --- !u!114 &771400303
 MonoBehaviour:
@@ -3950,7 +3951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e3a625c7c5c0084cb3873676f8b85bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameFinished: 0
   Player: {fileID: 771400300}
   AI: {fileID: 667726195}
   PlayerActions: {fileID: 771400303}
@@ -4005,7 +4005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e41f2ae476f2c4ebbe309012277064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnOnDelay: 0
+  turnOnDelay: 1
   PlayerActions: {fileID: 771400303}
   AIActions: {fileID: 667726198}
 --- !u!1 &1922979224

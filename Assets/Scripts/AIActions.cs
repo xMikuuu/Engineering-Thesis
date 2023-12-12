@@ -13,17 +13,17 @@ public class AIActions : MonoBehaviour
     [SerializeField] Minimax Minimax;
     [SerializeField] GameObject consoleBackground;
 
-    private int randomMove;
+    public int randomMove;
 
     public static bool turnMade=false;
     // variables for timer/delay
     public static float time;
-    private float timeRemaining = 1;
-    public bool delay;
-    public bool turnOnDelay = false;
+    public static float timeRemaining = 1;
+    public static bool delay;
+    public static bool turnOnDelay = false;
 
-    private List<int> hejka = new List<int>{12,1,34,7,8,10,78};
-    private int chosenAction;
+    public List<int> hejka = new List<int>{12,1,34,7,8,10,78};
+    public int chosenAction;
 
     //private List<ActionClass> ListOfActionsv2;
 
@@ -129,9 +129,9 @@ public class AIActions : MonoBehaviour
         if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false && delay == false){
             AIStats.isDefensive = false;
 
-
-            Actions.listOfActions[0].ExecuteAction();
+            //Debug.Log("hej");
             //Actions.listOfActions[0].ExecuteAction();
+            Actions.listOfActions[0].ExecuteAction();
 
             chosenAction = Minimax.MinimaxFunction(0,0,true,1);
 
