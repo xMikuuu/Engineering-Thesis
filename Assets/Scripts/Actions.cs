@@ -78,6 +78,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             MoveLeft();
+            Debug.Log("MoveLeft");
             base.ExecuteAction();
         }
     }
@@ -85,6 +86,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             MoveRight();
+            Debug.Log("MoveRight");
             base.ExecuteAction();
         }
     }
@@ -93,6 +95,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             QuickAttack();
+            Debug.Log("QuickAttack");
             base.ExecuteAction();
         }
     }
@@ -101,6 +104,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             NormalAttack();
+            Debug.Log("NormalAttack");
             base.ExecuteAction();
         }
     }
@@ -109,6 +113,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             HeavyAttack();
+            Debug.Log("HeavyAttack");
             base.ExecuteAction();
         }
     }
@@ -117,6 +122,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             HealPotion();
+            Debug.Log("HealingPotion");
             base.ExecuteAction();
         }
     }
@@ -125,6 +131,7 @@ public class Actions : MonoBehaviour
         public override void ExecuteAction()
         {
             DefensiveStanceAction();
+            Debug.Log("DefensiveStance");
             base.ExecuteAction();
         }
     }
@@ -229,7 +236,17 @@ public class Actions : MonoBehaviour
         listOfActions.Add(healPotionObj); 
         listOfActions.Add(defensivestanceObj);        
 
+
+
         listOfActions[0].ExecuteAction();
+
+        //Debug.Log(Actions.listOfActions);
+        // foreach (Actions hej in listOfActions){
+        //     hej.ExecuteAction();
+        // }
+
+
+
     }
 
     void Update(){
@@ -394,9 +411,6 @@ public class Actions : MonoBehaviour
         isMovingRight = true;
         consoleText.text = turnAction.name+" moved Right";
     }
-
-
-
 
     public void CheckTurn(){ // Switch turn after every action, also it checks whos turn it is 
                 //Debug.Log(turnFlag);

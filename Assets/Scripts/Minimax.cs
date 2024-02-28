@@ -10,6 +10,8 @@ public class Minimax : MonoBehaviour
 {
     [SerializeField] int depth; // how many moves in future should algorithm check
     [SerializeField] Actions Actions;
+    [SerializeField] AIActions AIActions;
+    [SerializeField] PlayerActions PlayerActions;
 
     // difficulty levels:
     // easy: ai moves randomly
@@ -82,8 +84,31 @@ public class Minimax : MonoBehaviour
   5,6,7,  8,9,10, 11,12,13, 14,15,16};
 
 
+    private int playerHealthtmp;
+    private int aiHealthtmp;
 
-    void Awake(){
+    private int playerPositiontmp;
+    private int aiPositiontmp;
+
+    private List<bool> PlayerAvailableActionstmp;
+    private List<bool> AIAvailableActionstmp;
+
+
+
+
+
+    private void Start(){
+        Debug.Log(Actions.listOfActions.Count);
+    }
+
+
+    private void Awake(){
+        foreach (Actions hej in Actions.listOfActions)
+        {
+            //hej.ExecuteAction();
+            Debug.Log("hej");
+        }
+
         //Debug.Log(actions);
         // for(int i=0;i<test.Count;i++)
         // {
@@ -100,7 +125,7 @@ public class Minimax : MonoBehaviour
 
 
 
-    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h){
+    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, Actions gameState){
 
         // 1. liczenie indexu listy (depth,height,nodeindex tutaj jakieś działanie)
         // 2. liczenie indexu rodzica
@@ -118,6 +143,10 @@ public class Minimax : MonoBehaviour
         // }
         //Debug.Log(ListOfAvailableActions);
 
+        AIActions.CheckAIActions();
+        PlayerActions.CheckPlayerActions();
+
+
         if (depth == h){      
             score = Actions.AIStats.currentHealth-Actions.PlayerStats.currentHealth; // nwm czy on tutaj powinien sie update'ować
             //Debug.Log("Available moves for AI: "+ListOfAvailableActions);   //.count
@@ -127,34 +156,43 @@ public class Minimax : MonoBehaviour
             //return score[nodeIndex];
         }
 
-        //if (czy akcja moze byc wykonana) jak moze byc wykoonana to wykonuje
+        //if (czy akcja moze byc wykonana) jak moze byc wykoonana to wykonuje ???
 
         if(isMax){
             temp = int.MinValue;
-            for (int i = 0; i < test.Count; i++) { //.count zmienić test na ActionsList czy cos
+
+            for (int i = 0; i < Actions.listOfActions.Count; i++) { //.count zmienić test na ActionsList czy cos
+                //Actions actions = gameState.MemberwiseClone(); //.clone sklonować wszystko do nowego obiektu poprzez metode nową najlepiej
+
+
+                //Actions actions = new Actions();
+                //actions.listOfActions[i].ExecuteAction();
+                //score = ....
+
                 // tutaj dać score outcome'u danej akcji (?)
                  // dodać że returnuje też akcje daną żeby potem mógł ją wykonać
                 //Debug.Log(i);
                 
-                temp = Math.Max(temp, MinimaxFunction(depth+1,i,false,h));
+                //temp = Math.Max(temp, MinimaxFunction(depth+1,i,false,h,actions));
             }
             return temp;
-
         }
         else{
-            temp = int.MaxValue;
-            for (int i = 0; i < ListOfAvailableActions; i++) { //. count
-                // tutaj dać score outcome'u danej akcji (?)
+            //temp = int.MaxValue;
+            //for (int i = 0; i < ListOfAvailableActions; i++) { //. count
+            //    // tutaj dać score outcome'u danej akcji (?)
 
-                temp = Math.Min(temp, MinimaxFunction(depth+1,i,true,h));
-
-            }
+            //    temp = Math.Min(temp, MinimaxFunction(depth+1,i,true,h));
+            //}
             return temp;
         }
     }
 
 
-
+    private void CopyActionClass()
+    {
+        string xd;
+    }  
 
 
         // chosenAction = 0; // change it if any one the actions could be below 0 somehow

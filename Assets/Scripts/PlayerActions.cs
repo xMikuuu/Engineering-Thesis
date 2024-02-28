@@ -26,16 +26,87 @@ public class PlayerActions : MonoBehaviour
 
 
 
-        // variables for timer/delay
+    public bool moveRightAction;
+    public bool moveLeftAction;   
+    public bool quickAttackAction;  
+    public bool normalAttackAction; 
+    public bool heavyAttackAction;
+    public bool healPotionAction;
+    public bool defensivestanceAction;
+
+
+
+
+    // variables for timer/delay
     public static float time;
     private float timeRemaining = 1;
     public bool delay;
     private bool firstTurn=true;
     public bool turnOnDelay = false;
 
+    public List<bool> PlayerAvailableActions = new List<bool>();
+
+
+
+    void Start(){
+        PlayerAvailableActions.Add(moveRightAction);
+        PlayerAvailableActions.Add(moveLeftAction);
+
+        PlayerAvailableActions.Add(quickAttackAction);
+        PlayerAvailableActions.Add(normalAttackAction);
+        PlayerAvailableActions.Add(heavyAttackAction);       
+
+        PlayerAvailableActions.Add(healPotionAction);
+        PlayerAvailableActions.Add(defensivestanceAction);        
+    }
+
+
+    public void CheckPlayerActions(){
+        if(Player.transform.position.x == -(Actions.xBound)){
+                    PlayerAvailableActions[1] = false;
+                }
+                else
+                {
+                    PlayerAvailableActions[1] = true;
+                }
+
+                if(Player.transform.position.x == Actions.xBound){
+                    PlayerAvailableActions[0] = false;
+                }
+                else
+                {
+                    PlayerAvailableActions[0] = true;
+                }
+
+
+                if(Actions.inRange==true){
+                    PlayerAvailableActions[2] = true; 
+                    PlayerAvailableActions[3] = true; 
+                    PlayerAvailableActions[4] = true;
+                    PlayerAvailableActions[6] = true;
+                }
+                else{
+                    PlayerAvailableActions[2] = false; 
+                    PlayerAvailableActions[3] = false; 
+                    PlayerAvailableActions[4] = false;
+                    PlayerAvailableActions[6] = false;
+                }
+
+
+                if(PlayerStats.currentHealth<PlayerStats.maxHealth){
+                    PlayerAvailableActions[5] = true;
+                }
+                else{
+                    PlayerAvailableActions[5] = false;
+                }
+
+    }
 
     void Update()
     {        
+
+        CheckPlayerActions();
+
         if(firstTurn){
             delay=false;
             firstTurn=false;

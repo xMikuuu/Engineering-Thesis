@@ -28,23 +28,40 @@ public class AIActions : MonoBehaviour
     //private List<ActionClass> ListOfActionsv2;
 
     // Movement buttons and attack buttons
-    // public bool moveRight;
-    // public bool moveLeft;   
-    // public bool quickAttack;  
-    // public bool normalAttack; 
-    // public bool heavyAttack;
-    // public bool healPotion;
-    // public bool defensivestance;
+    public bool moveRightAction;
+    public bool moveLeftAction;   
+    public bool quickAttackAction;  
+    public bool normalAttackAction; 
+    public bool heavyAttackAction;
+    public bool healPotionAction;
+    public bool defensivestanceAction;
 
-    public Dictionary<string, bool> ListOfActions = new Dictionary<string, bool>(){
-        {"moveRight",false},
-        {"moveLeft",false},
-        {"quickAttack",false},
-        {"normalAttack",false},
-        {"heavyAttack",false},
-        {"healPotion",false},
-        {"defensivestance",false}
-    };
+    // public Dictionary<string, bool> ListOfActions = new Dictionary<string, bool>(){
+    //     {"moveRight",false},
+    //     {"moveLeft",false},
+    //     {"quickAttack",false},
+    //     {"normalAttack",false},
+    //     {"heavyAttack",false},
+    //     {"healPotion",false},
+    //     {"defensivestance",false}
+    // };
+
+
+    public List<bool> AIAvailableActions = new List<bool>();
+
+
+    void Start(){
+        AIAvailableActions.Add(moveRightAction);
+        AIAvailableActions.Add(moveLeftAction);
+
+        AIAvailableActions.Add(quickAttackAction);
+        AIAvailableActions.Add(normalAttackAction);
+        AIAvailableActions.Add(heavyAttackAction);       
+
+        AIAvailableActions.Add(healPotionAction);
+        AIAvailableActions.Add(defensivestanceAction);        
+    }
+
 
 
 // public class ActionClass{
@@ -82,58 +99,19 @@ public class AIActions : MonoBehaviour
     {
  
         OneSecondTimer();
-        //Disable actions if AI is on the edge of the map
-        if(AI.transform.position.x == -(Actions.xBound)){
-            ListOfActions["moveLeft"] = false;
-        }
-        else
-        {
-            ListOfActions["moveLeft"] = true;
-        }
-
-        if(AI.transform.position.x == Actions.xBound){
-             ListOfActions["moveRight"] = false;
-        }
-        else
-        {
-            ListOfActions["moveRight"] = true;
-        }
-
-        //Debug.Log(ListOfActions["moveRight"]);
-
-        // // Disable attacks if AI is not in range
-        if(Actions.inRange==true){
-            ListOfActions["quickAttack"] = true; 
-            ListOfActions["normalAttack"] = true; 
-            ListOfActions["heavyAttack"] = true;
-            ListOfActions["defensivestance"] = true;
-        }
-        else{
-            ListOfActions["quickAttack"] = false; 
-            ListOfActions["normalAttack"] = false; 
-            ListOfActions["heavyAttack"] = false;
-            ListOfActions["defensivestance"] = false;
-        }
-
-        // // Disable potion if AI has full health
-        if(AIStats.currentHealth<AIStats.maxHealth){
-            ListOfActions["healPotion"] = true;
-        }
-        else{
-            ListOfActions["healPotion"] = false;
-        }
-
+        CheckAIActions();
 
 
         // Take turn
         if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false && delay == false){
             AIStats.isDefensive = false;
 
-            //Debug.Log("hej");
+            Debug.Log("hej");
             //Actions.listOfActions[0].ExecuteAction();
-            Actions.listOfActions[0].ExecuteAction();
+            Actions.listOfActions[1].ExecuteAction();
 
-            chosenAction = Minimax.MinimaxFunction(0,0,true,1);
+            //chosenAction = Minimax.MinimaxFunction(0,0,true,1,Actions);
+            //Minimax
 
             //Actions.CheckTurn();
 
@@ -177,11 +155,50 @@ public class AIActions : MonoBehaviour
             // if(randomMove==4){
             //     Actions.HeavyAttack();
             // } 
-
-
         }
-
     }
+
+
+    public void CheckAIActions(){
+        if(AI.transform.position.x == -(Actions.xBound)){
+                AIAvailableActions[1] = false;
+            }
+            else
+            {
+                AIAvailableActions[1] = true;
+            }
+
+            if(AI.transform.position.x == Actions.xBound){
+                AIAvailableActions[0] = false;
+            }
+            else
+            {
+                AIAvailableActions[0] = true;
+            }
+
+            // // Disable attacks if AI is not in range
+            if(Actions.inRange==true){
+                AIAvailableActions[2] = true; 
+                AIAvailableActions[3] = true; 
+                AIAvailableActions[4] = true;
+                AIAvailableActions[6] = true;
+            }
+            else{
+                AIAvailableActions[2] = false; 
+                AIAvailableActions[3] = false; 
+                AIAvailableActions[4] = false;
+                AIAvailableActions[6] = false;
+            }
+
+            // // Disable potion if AI has full health
+            if(AIStats.currentHealth<AIStats.maxHealth){
+                AIAvailableActions[5] = true;
+            }
+            else{
+                AIAvailableActions[5] = false;
+            }
+    }
+
 
 
 

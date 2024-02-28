@@ -2059,6 +2059,14 @@ MonoBehaviour:
   randomMove: 0
   hejka: 0c000000010000002200000007000000080000000a0000004e000000
   chosenAction: 0
+  moveRightAction: 0
+  moveLeftAction: 0
+  quickAttackAction: 0
+  normalAttackAction: 0
+  heavyAttackAction: 0
+  healPotionAction: 0
+  defensivestanceAction: 0
+  AIAvailableActions: 
 --- !u!61 &667726199
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2472,8 +2480,16 @@ MonoBehaviour:
   heavyAttackClickable: 0
   healPotionClickable: 0
   defensivestanceClickable: 0
+  moveRightAction: 0
+  moveLeftAction: 0
+  quickAttackAction: 0
+  normalAttackAction: 0
+  heavyAttackAction: 0
+  healPotionAction: 0
+  defensivestanceAction: 0
   delay: 1
   turnOnDelay: 1
+  PlayerAvailableActions: 
 --- !u!61 &771400304
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3217,6 +3233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depth: 0
   Actions: {fileID: 1910600633}
+  AIActions: {fileID: 667726198}
+  PlayerActions: {fileID: 771400303}
   score: 0
 --- !u!1 &1316190462
 GameObject:
