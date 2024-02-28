@@ -26,7 +26,7 @@ public class Minimax : MonoBehaviour
 
     //private Dictionary<string, bool> ListOfAvailableActions = new Dictionary<string, bool>();
 
-    int ListOfAvailableActions=2;
+
     //public int healthDifference; // AIStats.currentHealt - PlayerStats.currentHealth;
 
     // private List<int> hejka = new List<int>{12,1,34,7,8,46,78};
@@ -146,6 +146,7 @@ public class Minimax : MonoBehaviour
         AIActions.CheckAIActions();
         PlayerActions.CheckPlayerActions();
 
+        Debug.Log("im in");
 
         if (depth == h){      
             score = Actions.AIStats.currentHealth-Actions.PlayerStats.currentHealth; // nwm czy on tutaj powinien sie update'ować

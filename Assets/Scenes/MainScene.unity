@@ -2054,7 +2054,7 @@ MonoBehaviour:
   Actions: {fileID: 1910600633}
   AI: {fileID: 667726195}
   AIStats: {fileID: 667726197}
-  Minimax: {fileID: 1258151622}
+  minimax: {fileID: 1258151622}
   consoleBackground: {fileID: 623303524}
   randomMove: 0
   hejka: 0c000000010000002200000007000000080000000a0000004e000000

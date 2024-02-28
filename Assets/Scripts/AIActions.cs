@@ -10,7 +10,7 @@ public class AIActions : MonoBehaviour
     [SerializeField] Actions Actions;
     [SerializeField] GameObject AI;
     [SerializeField] AIStats AIStats;
-    [SerializeField] Minimax Minimax;
+    [SerializeField] Minimax minimax;
     [SerializeField] GameObject consoleBackground;
 
     public int randomMove;
@@ -108,7 +108,8 @@ public class AIActions : MonoBehaviour
 
             Debug.Log("hej");
             //Actions.listOfActions[0].ExecuteAction();
-            Actions.listOfActions[1].ExecuteAction();
+            //Actions.listOfActions[1].ExecuteAction();
+            minimax.MinimaxFunction(0, 0, true, 0, Actions);
 
             //chosenAction = Minimax.MinimaxFunction(0,0,true,1,Actions);
             //Minimax

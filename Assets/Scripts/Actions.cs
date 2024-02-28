@@ -4,8 +4,9 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class Actions : MonoBehaviour
+public class Actions : ICloneable
 {
     // 0 = Player
     // 1 = AI
@@ -142,7 +143,7 @@ public class Actions : MonoBehaviour
 // 7 klas które dziedziczą dane akcje, i obiekty tych klas do listy
     public List<Actions> listOfActions = new List<Actions>();
 
-    void Awake(){
+    private void Awake(){
         CheckTurn();
         step = speed * Time.deltaTime;
 
@@ -238,7 +239,7 @@ public class Actions : MonoBehaviour
 
 
 
-        listOfActions[0].ExecuteAction();
+        //listOfActions[0].ExecuteAction();
 
         //Debug.Log(Actions.listOfActions);
         // foreach (Actions hej in listOfActions){
@@ -249,7 +250,7 @@ public class Actions : MonoBehaviour
 
     }
 
-    void Update(){
+    private void Update(){
         //Debug.Log(turnAction.name);
         //CheckDistance(Player.transform.position,AI.transform.position);
         // Check if player is currently moving if so, do this fancy functions
@@ -426,4 +427,24 @@ public class Actions : MonoBehaviour
                 }
                 turnFlag = !turnFlag;    
     }
+
+    public object Clone() // zamienić to na własną funkcje co kopiuje zmienne i je daje
+    {
+        return new Actions
+        {
+            listOfActions = this.listOfActions,
+            Player = this.Player,
+            AI = this.AI,
+            PlayerActions = this.PlayerActions,
+            AIActions = this.AIActions,
+            PlayerStats = this.PlayerStats,
+            AIStats = this.AIStats
+        };
+    }
+    //[SerializeField] public GameObject Player;
+    //[SerializeField] public GameObject AI;
+    //[SerializeField] public PlayerActions PlayerActions;
+    //[SerializeField] public AIActions AIActions;
+    //[SerializeField] public PlayerStats PlayerStats;
+    //[SerializeField] public AIStats AIStats;
 }
