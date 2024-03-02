@@ -6,12 +6,12 @@ using System;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class Actions : ICloneable
+public class Actions : MonoBehaviour
 {
     // 0 = Player
     // 1 = AI
     public static bool turnFlag;
-    public static GameObject turnAction; // variable to which it assigns the current object
+    public GameObject turnAction; // variable to which it assigns the current object
     public static bool gameFinished = false;
 
     [SerializeField] public GameObject Player;
@@ -71,69 +71,69 @@ public class Actions : ICloneable
 
 
 
-    public virtual void ExecuteAction()
+    public virtual void ExecuteAction(bool isSimulation=false, GameState state = null)
     {
     }
     
     public class MoveLeftAction : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
             MoveLeft();
-            Debug.Log("MoveLeft");
-            base.ExecuteAction();
+            //Debug.Log("MoveLeft");
+            base.ExecuteAction(isSimulation,state);
         }
     }
     public class MoveRightAction : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
             MoveRight();
-            Debug.Log("MoveRight");
-            base.ExecuteAction();
+            //Debug.Log("MoveRight");
+            base.ExecuteAction(isSimulation,state);
         }
     }
 
     public class QuickAttackAction : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
-            QuickAttack();
-            Debug.Log("QuickAttack");
-            base.ExecuteAction();
+            QuickAttack(isSimulation,state);
+            //Debug.Log("QuickAttack");
+            base.ExecuteAction(isSimulation,state);
         }
     }
 
     public class NormalAttackAction : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
             NormalAttack();
-            Debug.Log("NormalAttack");
-            base.ExecuteAction();
+            //Debug.Log("NormalAttack");
+            base.ExecuteAction(isSimulation,state);
         }
     }
 
     public class HeavyAttackAction : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
             HeavyAttack();
-            Debug.Log("HeavyAttack");
-            base.ExecuteAction();
+            //Debug.Log("HeavyAttack");
+            base.ExecuteAction(isSimulation,state);
         }
     }
 
     public class HealPotionAction : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
             HealPotion();
-            Debug.Log("HealingPotion");
-            base.ExecuteAction();
+            //Debug.Log("HealingPotion");
+            base.ExecuteAction(isSimulation,state);
         }
     }
 
     public class DefensiveStanceActionn : Actions{
-        public override void ExecuteAction()
+        public override void ExecuteAction(bool isSimulation = false, GameState state = null)
         {
             DefensiveStanceAction();
-            Debug.Log("DefensiveStance");
-            base.ExecuteAction();
+            //Debug.Log("DefensiveStance");
+            base.ExecuteAction(isSimulation,state);
         }
     }
 
@@ -145,6 +145,7 @@ public class Actions : ICloneable
 
     private void Awake(){
         CheckTurn();
+        //turnAction = Player;
         step = speed * Time.deltaTime;
 
         MoveRightAction moveRightObj = new MoveRightAction();
@@ -283,46 +284,107 @@ public class Actions : ICloneable
         }
     }
 
-    public void Attack(int damage,int chance){
+    public void Attack(int damage,int chance, bool isSimulation = false, GameState state = null){
         hitOrMiss = UnityEngine.Random.Range(1,101); // 1-100 range
-        // hit
-        if(hitOrMiss<=chance){
-
-
-            if(turnAction == Player){
-                //Debug.Log("Player atakuje");
-                if(AIStats.isDefensive==true){
-                    AIStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
+        if (isSimulation == false)
+        {
+            // hit
+            Debug.Log(turnAction);
+            if (hitOrMiss <= chance)
+            {
+                if (turnAction == Player)
+                {
+                    //Debug.Log("Player atakuje");
+                    if (AIStats.isDefensive == true)
+                    {
+                        AIStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
+                    }
+                    else
+                    {
+                        AIStats.currentHealth -= damage;
+                    }
                 }
-                else{
-                    AIStats.currentHealth -= damage;
+                else
+                {
+                    //Debug.Log("AI atakuje");
+                    if (PlayerStats.isDefensive == true)
+                    {
+                        PlayerStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
+                    }
+                    else
+                    {
+                        PlayerStats.currentHealth -= damage;
+                    }
                 }
+                consoleText.text += "\nHit!";
+                CheckWin();
+                AIActions.turnMade = false;
             }
-            else{
-                //Debug.Log("AI atakuje");
-                if(PlayerStats.isDefensive==true){
-                    PlayerStats.currentHealth -= (damage - (damage * defensiveStanceProcent / 100));
-                }
-                else{
-                    PlayerStats.currentHealth -= damage;
-                }
+            // miss
+            else
+            {
+                consoleText.text += "\nMissed!";
+                CheckTurn();
+                AIActions.turnMade = false;
             }
-            consoleText.text += "\nHit!";
-            CheckWin();
-            AIActions.turnMade=false;
         }
-        // miss
-        else{
-            consoleText.text += "\nMissed!";
-            CheckTurn();
-            AIActions.turnMade=false;
+        // Simulation of the attack
+        else
+        {
+            Debug.Log("Symuluje Atak2");
+            Debug.Log(turnAction);
+            // hit
+            if (hitOrMiss <= chance)
+            {
+                if (state.actions.turnAction == Player)
+                {
+                    //Debug.Log("Player atakuje");
+                    if (state.actions.AIStats.isDefensive == true)
+                    {
+                        state.aiHealth -= (damage - (damage * defensiveStanceProcent / 100));
+                    }
+                    else
+                    {
+                        state.aiHealth -= damage;
+                    }
+                }
+                else
+                {
+                    //Debug.Log("AI atakuje");
+                    if (state.actions.PlayerStats.isDefensive == true)
+                    {
+                        state.playerHealth -= (damage - (damage * defensiveStanceProcent / 100));
+                    }
+                    else
+                    {
+                        state.playerHealth -= damage;
+                    }
+                }
+                CheckWin();
+                AIActions.turnMade = false;
+            }
+            // miss
+            else
+            {
+                CheckTurn();
+                AIActions.turnMade = false;
+            }
         }
+        Debug.Log("koniec tury");
     }
 
     // basic attacks
-    public void QuickAttack(){
-        consoleText.text = turnAction.name+" used Quick Attack!";
-        Attack(quickDamage,quickProcent);
+    public void QuickAttack(bool isSimulation = false, GameState state = null){
+        if (isSimulation == false)
+        {
+            consoleText.text = turnAction.name + " used Quick Attack!";
+            Attack(quickDamage, quickProcent);
+        }
+        else
+        {
+            Debug.Log("Symuluje atak");
+            Attack(quickDamage,quickProcent,isSimulation,state);
+        }
     }
 
     public void NormalAttack(){
@@ -428,19 +490,22 @@ public class Actions : ICloneable
                 turnFlag = !turnFlag;    
     }
 
-    public object Clone() // zamienić to na własną funkcje co kopiuje zmienne i je daje
-    {
-        return new Actions
-        {
-            listOfActions = this.listOfActions,
-            Player = this.Player,
-            AI = this.AI,
-            PlayerActions = this.PlayerActions,
-            AIActions = this.AIActions,
-            PlayerStats = this.PlayerStats,
-            AIStats = this.AIStats
-        };
-    }
+    //public object Clone() // zamienić to na własną funkcje co kopiuje zmienne i je daje
+    //{
+    //    return new Actions
+    //    {
+    //        listOfActions = this.listOfActions,
+    //        Player = this.Player,
+    //        AI = this.AI,
+    //        PlayerActions = this.PlayerActions,
+    //        AIActions = this.AIActions,
+    //        PlayerStats = this.PlayerStats,
+    //        AIStats = this.AIStats
+    //    };
+    //}
+
+
+    //public object Copying
     //[SerializeField] public GameObject Player;
     //[SerializeField] public GameObject AI;
     //[SerializeField] public PlayerActions PlayerActions;

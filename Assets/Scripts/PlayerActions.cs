@@ -12,7 +12,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject AI;
     [SerializeField] PlayerStats PlayerStats;
     [SerializeField] GameObject consoleBackground;
-
+    [SerializeField] GameStateManager gameStateManager;
 
 
     // Movement buttons and attack buttons
@@ -119,6 +119,8 @@ public class PlayerActions : MonoBehaviour
             // If its players turn:
             if(Actions.turnAction==Player && Actions.gameFinished == false && delay == false){
 
+
+                //GameState state2 = gameStateManager.CopyAndModifyState();
 
                 //Actions.listOfActions[0].ExecuteAction();
 

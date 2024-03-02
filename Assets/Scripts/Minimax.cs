@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
-using System.Linq;
 
 public class Minimax : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class Minimax : MonoBehaviour
     [SerializeField] Actions Actions;
     [SerializeField] AIActions AIActions;
     [SerializeField] PlayerActions PlayerActions;
+
 
     // difficulty levels:
     // easy: ai moves randomly
@@ -97,27 +97,27 @@ public class Minimax : MonoBehaviour
 
 
 
-    private void Start(){
-        Debug.Log(Actions.listOfActions.Count);
-    }
+    //private void Start(){
+    //    Debug.Log(Actions.listOfActions.Count);
+    //}
 
 
-    private void Awake(){
-        foreach (Actions hej in Actions.listOfActions)
-        {
-            //hej.ExecuteAction();
-            Debug.Log("hej");
-        }
+    //private void Awake(){
+    //    foreach (Actions hej in Actions.listOfActions)
+    //    {
+    //        //hej.ExecuteAction();
+    //        Debug.Log(hej);
+    //    }
 
-        //Debug.Log(actions);
-        // for(int i=0;i<test.Count;i++)
-        // {
-        // Debug.Log(test[i]);
-        // }
-        //Action a = () => Actions.MoveLeft();
-        //Invoke(Actions.MoveLeft());
-        // listOfActions.Add(Invoke(() => Actions.MoveLeft()));
-    }
+    //    //Debug.Log(actions);
+    //    // for(int i=0;i<test.Count;i++)
+    //    // {
+    //    // Debug.Log(test[i]);
+    //    // }
+    //    //Action a = () => Actions.MoveLeft();
+    //    //Invoke(Actions.MoveLeft());
+    //    // listOfActions.Add(Invoke(() => Actions.MoveLeft()));
+    //}
 
     // private void test2(){
     //     Debug.Log("test");
@@ -125,7 +125,7 @@ public class Minimax : MonoBehaviour
 
 
 
-    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, Actions gameState){
+    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, GameState gameState){
 
         // 1. liczenie indexu listy (depth,height,nodeindex tutaj jakieś działanie)
         // 2. liczenie indexu rodzica
@@ -146,7 +146,9 @@ public class Minimax : MonoBehaviour
         AIActions.CheckAIActions();
         PlayerActions.CheckPlayerActions();
 
-        Debug.Log("im in");
+        Debug.Log("Minimax Start");
+
+        //Debug.Log("Initial state score:" + gameState.score);
 
         if (depth == h){      
             score = Actions.AIStats.currentHealth-Actions.PlayerStats.currentHealth; // nwm czy on tutaj powinien sie update'ować

@@ -12,6 +12,7 @@ public class AIActions : MonoBehaviour
     [SerializeField] AIStats AIStats;
     [SerializeField] Minimax minimax;
     [SerializeField] GameObject consoleBackground;
+    [SerializeField] GameStateManager gameStateManager;
 
     public int randomMove;
 
@@ -106,10 +107,28 @@ public class AIActions : MonoBehaviour
         if(Actions.turnAction==AI && !turnMade && Actions.gameFinished == false && delay == false){
             AIStats.isDefensive = false;
 
-            Debug.Log("hej");
+            Debug.Log("AI Turn");
             //Actions.listOfActions[0].ExecuteAction();
             //Actions.listOfActions[1].ExecuteAction();
-            minimax.MinimaxFunction(0, 0, true, 0, Actions);
+            //minimax.MinimaxFunction(0, 0, true, 0, gameStateManager.CopyState());
+
+            //GameState state2 = gameStateManager.CopyAndModifyState();
+
+
+            //Actions.MoveLeft();
+            GameState state2 = gameStateManager.CopyAndModifyState();
+
+
+            //state2.actions.listOfActions[2].ExecuteAction(true, state2);
+
+            //state2.UpdateScore();
+            //state2.actions.listOfActions[3].ExecuteAction() ;
+            //Debug.Log(state2.score);
+            //GameState state2 = gameStateManager.CopyState();
+            //GameState state2Modify = gameStateManager.ModifyState(state2);
+            //state2Modify.listOfActions[2].ExecuteAction();
+            //Debug.Log("State2 score:"+ state2Modify.score);
+
 
             //chosenAction = Minimax.MinimaxFunction(0,0,true,1,Actions);
             //Minimax
