@@ -104,7 +104,7 @@ public class Attacks : MonoBehaviour
         damage = 10;
         if(target == GameObjects.Instance.AiObject)
         {
-            if (state.aiHealth >= quickThreshold)
+            if (state.aiHealth >= GameObjects.Instance.Attacks.quickThreshold)
             {
                 damage = quickDamages[1];
             }
@@ -115,7 +115,7 @@ public class Attacks : MonoBehaviour
         }
         if (target == GameObjects.Instance.PlayerObject)
         {
-            if (state.playerHealth >= quickThreshold)
+            if (state.playerHealth >= GameObjects.Instance.Attacks.quickThreshold)
             {
                 damage = quickDamages[1];
             }
@@ -124,7 +124,7 @@ public class Attacks : MonoBehaviour
                 damage = quickDamages[0];
             }
         }
-        //Debug.Log("Quick attack target:" + target);
+        Debug.Log("Quick attack target:" + target);
         Attack(damage, target, state);
     }
 
@@ -132,7 +132,7 @@ public class Attacks : MonoBehaviour
     {
         if (target == GameObjects.Instance.AiObject)
         {
-            if (state.aiHealth < quickThreshold && state.aiHealth > heavyThreshold)
+            if (state.aiHealth < GameObjects.Instance.Attacks.quickThreshold && state.aiHealth > GameObjects.Instance.Attacks.heavyThreshold)
             {
                 damage = normalDamages[1];
             }
@@ -143,7 +143,7 @@ public class Attacks : MonoBehaviour
         }
         if (target == GameObjects.Instance.PlayerObject)
         {
-            if (state.playerHealth < quickThreshold && state.playerHealth > heavyThreshold)
+            if (state.playerHealth < GameObjects.Instance.Attacks.quickThreshold && state.playerHealth > GameObjects.Instance.Attacks.heavyThreshold)
             {
                 damage = normalDamages[1];
             }
@@ -159,7 +159,7 @@ public class Attacks : MonoBehaviour
     {
         if (target == GameObjects.Instance.AiObject)
         {
-            if (state.aiHealth <= heavyThreshold)
+            if (state.aiHealth <= GameObjects.Instance.Attacks.heavyThreshold)
             {
                 damage = heavyDamages[1];
             }
@@ -170,7 +170,7 @@ public class Attacks : MonoBehaviour
         }
         if (target == GameObjects.Instance.PlayerObject)
         {
-            if (state.playerHealth <= heavyThreshold)
+            if (state.playerHealth <= GameObjects.Instance.Attacks.heavyThreshold)
             {
                 damage = heavyDamages[1];
             }

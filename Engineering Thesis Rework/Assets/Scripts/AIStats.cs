@@ -30,7 +30,7 @@ public class AIStats : MonoBehaviour, IDamageable
         {
             gameState = gameStateManager.CopyAndModifyState();
 
-            Debug.Log("Wybrany ruch: "+ minimax.MinimaxFunction(0, 0, true, h, gameState, gameState.aiHealth-gameState.playerHealth));
+            //Debug.Log("Wybrany ruch: "+ minimax.MinimaxFunction(0, 0, true, h, gameState));
             //attacks.listOfActions[minimax.MinimaxFunction(0, 0, true, h, gameState)].ExecuteAction(player, gameStateManager.currentState);
             //result = minimax.MinimaxFunction(0, 0, true, h, gameState);
             //Debug.Log(result.bestActionIndex);

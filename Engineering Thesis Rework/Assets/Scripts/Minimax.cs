@@ -92,7 +92,7 @@ public class Minimax : MonoBehaviour
 
     // Ten mój minimax
 
-    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, GameState gameState, int score)
+    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, GameState gameState)
     {
         //int bestAction = -1;
         if (depth == h)
@@ -105,20 +105,12 @@ public class Minimax : MonoBehaviour
             int tempScore = -1;
             for (int i = 0; i < attacks.listOfActions.Count; i++)
             {
-                Debug.Log(i);
                 tempGameState = gameStateManager.CopyAndModifyState();
                 attacks.listOfActions[i].ExecuteAction(GameObjects.Instance.PlayerObject, tempGameState);
-                tempScore = EvaluateGameState(tempGameState);
-                temp = Math.Max(tempScore, MinimaxFunction(depth + 1, i, true, h, gameState, score));
-                if(tempScore<temp)
-                {
-                    bestMove = i;
-    
-                    //bestAction = i;
-                    Debug.Log("xd?");
-                }
-               // Debug.Log(temp);
+                //tempScore = EvaluateGameState(tempGameState);
+                temp = Math.Max(temp, MinimaxFunction(depth + 1, i, true, h, gameState));
             }
+            //Debug.Log(temp);
             return temp;
         }
 
