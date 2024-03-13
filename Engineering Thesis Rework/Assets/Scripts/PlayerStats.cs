@@ -7,19 +7,21 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour, IDamageable
 {
-    [SerializeField] Attacks attacks;
+    private Attacks attacks;
 
-    [SerializeField] Button quick;
-    [SerializeField] Button normal;
-    [SerializeField] Button heavy;
+    [SerializeField] private Button quick;
+    [SerializeField] private Button normal;
+    [SerializeField] private Button heavy;
 
-    [SerializeField] GameStateManager gameStateManager;
+    private GameStateManager gameStateManager;
     private GameObject ai;
 
 
-    private void Awake()
+    private void Start()
     {
+        gameStateManager = GameObjects.Instance.StateManager;
         ai = GameObjects.Instance.AiObject;
+        attacks = GameObjects.Instance.Attacks;
     }
 
 

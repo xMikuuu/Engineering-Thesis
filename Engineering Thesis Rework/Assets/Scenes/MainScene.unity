@@ -271,12 +271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f58c61493035948acb82ddf7026eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: {fileID: 2001531775}
   quick: {fileID: 1417372649}
   normal: {fileID: 1784637100}
   heavy: {fileID: 1170447001}
-  gameStateManager: {fileID: 1871309292}
-  ai: {fileID: 1165470120}
 --- !u!4 &225741543
 Transform:
   m_ObjectHideFlags: 0
@@ -1130,9 +1127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c65d2b88aee5c4dbf89e2d8d067932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: {fileID: 2001531775}
-  gameStateManager: {fileID: 1871309292}
-  player: {fileID: 225741541}
+  minimax: {fileID: 2001531778}
+  h: 3
 --- !u!4 &1165470122
 Transform:
   m_ObjectHideFlags: 0
@@ -2093,7 +2089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92af34485707dc4c997d9ca7f5e77a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiObject: {fileID: 0}
 --- !u!1 &2001531774
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,6 +2100,7 @@ GameObject:
   - component: {fileID: 2001531776}
   - component: {fileID: 2001531775}
   - component: {fileID: 2001531777}
+  - component: {fileID: 2001531778}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2124,10 +2120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03396cadae788cd49ba9cd5f9f338ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 225741541}
-  aiObject: {fileID: 1165470120}
-  gameState: {fileID: 1871309292}
-  quickDamages: 050000000f000000
+  quickDamages: 020000000f000000
   normalDamages: 0500000014000000
   heavyDamages: 010000001e000000
   quickThreshold: 75
@@ -2164,6 +2157,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiObject: {fileID: 1165470120}
   playerObject: {fileID: 225741541}
+  attacks: {fileID: 2001531775}
+  stateManager: {fileID: 1871309292}
+--- !u!114 &2001531778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001531774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474e8614342c0f04cbaa5b6a1ebd53e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
 --- !u!1 &2080616331
 GameObject:
   m_ObjectHideFlags: 0

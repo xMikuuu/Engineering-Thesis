@@ -17,7 +17,7 @@ public class Attacks : MonoBehaviour
     private GameObject playerObject;
     private GameObject aiObject;
 
-    [SerializeField] public GameStateManager gameState;
+    private GameStateManager gameState;
 
     [SerializeField] public List<int> quickDamages = new List<int>();
     [SerializeField] public List<int> normalDamages = new List<int>();
@@ -68,10 +68,11 @@ public class Attacks : MonoBehaviour
 
     public void Awake()
     {
+        gameState = GameObjects.Instance.StateManager;
         playerObject = GameObjects.Instance.PlayerObject;
         aiObject = GameObjects.Instance.AiObject;
         
-        ChangeTurn();
+        //ChangeTurn();
 
         QuickAttackAction quickAttackObj = new QuickAttackAction();
         quickAttackObj.quickDamages = quickDamages;
@@ -100,7 +101,6 @@ public class Attacks : MonoBehaviour
 
     public void QuickAttack(GameObject target, GameState state)
     {
-        Debug.Log(target);
         damage = 10;
         if(target == GameObjects.Instance.AiObject)
         {
@@ -115,7 +115,6 @@ public class Attacks : MonoBehaviour
         }
         if (target == GameObjects.Instance.PlayerObject)
         {
-            Debug.Log(".");
             if (state.playerHealth >= quickThreshold)
             {
                 damage = quickDamages[1];
@@ -125,7 +124,7 @@ public class Attacks : MonoBehaviour
                 damage = quickDamages[0];
             }
         }
-        Debug.Log("Quick attack target:" + target);
+        //Debug.Log("Quick attack target:" + target);
         Attack(damage, target, state);
     }
 
@@ -153,7 +152,7 @@ public class Attacks : MonoBehaviour
                 damage = normalDamages[0];
             }
         }
-        Debug.Log("Normal attack target:" + target);
+        //Debug.Log("Normal attack target:" + target);
         Attack(damage, target, state);
     }
     public void HeavyAttack(GameObject target, GameState state)
@@ -180,7 +179,7 @@ public class Attacks : MonoBehaviour
                 damage = heavyDamages[0];
             }
         }
-        Debug.Log("Heavy attack target:" + target);
+        //Debug.Log("Heavy attack target:" + target);
         Attack(damage, target, state);
     }
 
