@@ -4,35 +4,28 @@ using UnityEngine;
 
 public class GameState
 {
-    public Attacks attacks;
-    public List<Attacks> listOfActions;
-    public GameObject player;
-    public GameObject ai;
-    public int score;
+    public int playerHealth;
+    public int aiHealth;
 }
 public class GameStateManager : MonoBehaviour
 {
-    [SerializeField] public Attacks attacks;
     public GameState currentState;
 
     private void Start()
     {
         currentState = new GameState()
         {
-            attacks = this.attacks,
-            listOfActions = this.attacks.listOfActions,
-            player = this.attacks.playerObject,
-            ai = this.attacks.aiObject
+            playerHealth = 100,
+            aiHealth = 100,
         };
     }
     public GameState CopyAndModifyState()
     {
-        string serializedState = JsonUtility.ToJson(currentState);
-        GameState copiedState = JsonUtility.FromJson<GameState>(serializedState);
-
-        Debug.Log(copiedState.ai.name);
-
+        GameState copiedState = new GameState()
+        {
+            playerHealth = currentState.playerHealth,
+            aiHealth = currentState.aiHealth,
+        };
         return copiedState;
     }
-
 }

@@ -2,53 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
+using UnityEditor;
 using UnityEngine;
 
 public class AIStats : MonoBehaviour, IDamageable
 {
-    [SerializeField] public int maxHealth; // maximum health player can have
-    public int currentHealth; // current player health
-    [SerializeField] TextMeshProUGUI healthText;
-
-    [SerializeField] public GameObject playerObject;
     [SerializeField] public Attacks attacks;
+    [SerializeField] GameStateManager gameStateManager;
+    GameObject player;
 
-    [SerializeField] public GameStateManager gameStateManager;
+    GameState gameState;
 
-    public GameState gameState;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        currentHealth = maxHealth;
+        player = GameObjects.Instance.PlayerObject;
     }
+
+
 
     private void Update()
     {
-        healthText.text = currentHealth.ToString();
         if (!attacks.turnflag && !attacks.endgame)
         {
             gameState = gameStateManager.CopyAndModifyState();
-            Debug.Log(gameState.ai.GetComponent<AIStats>().currentHealth);
-            gameState.attacks.listOfActions[0].ExecuteAction(gameState.ai);
-            //gameState.attacks.listOfActions[0].ExecuteAction(gameState.ai);
 
-            //attacks.QuickAttack(playerObject);
-            //attacks.listOfActions[2].ExecuteAction(playerObject);
+            Debug.Log(gameState.aiHealth);
+
+            attacks.listOfActions[0].ExecuteAction(player, gameState);
+            Debug.Log("Virtual Player Health:" + gameState.playerHealth);
+            attacks.listOfActions[1].ExecuteAction(player, gameState);
+            Debug.Log("Virtual Player Health:" + gameState.playerHealth);
+            attacks.listOfActions[2].ExecuteAction(player, gameState);
+            Debug.Log("Virtual Player Health:" + gameState.playerHealth);
+            Debug.Log(gameState.aiHealth);
             attacks.ChangeTurn();
         }
     }
 
-    public void Damage(int damage)
+    public void Damage(int damage, GameState state)
     {
-        if(currentHealth - damage <= 0)
+        if (state.aiHealth - damage <= 0)
         {
-            currentHealth = 0;
-            attacks.EndGame(this.gameObject);
+            state.aiHealth = 0;
+            attacks.EndGame(this.gameObject, state);
         }
         else
         {
-            currentHealth -= damage;
+            state.aiHealth -= damage;
         }
     }
 }

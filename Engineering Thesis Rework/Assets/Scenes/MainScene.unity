@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 74628434}
   - component: {fileID: 74628433}
   - component: {fileID: 74628432}
+  - component: {fileID: 74628436}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -226,6 +227,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &74628436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74628431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f186af66dbc294a89d0bfa72374e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealthTxt: {fileID: 609077250}
+  aiHealthTxt: {fileID: 1623757532}
+  gameStateManager: {fileID: 1871309292}
 --- !u!1 &225741541
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,13 +271,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f58c61493035948acb82ddf7026eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  healthText: {fileID: 609077250}
   attacks: {fileID: 2001531775}
   quick: {fileID: 1417372649}
   normal: {fileID: 1784637100}
   heavy: {fileID: 1170447001}
+  gameStateManager: {fileID: 1871309292}
+  ai: {fileID: 1165470120}
 --- !u!4 &225741543
 Transform:
   m_ObjectHideFlags: 0
@@ -1115,12 +1130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c65d2b88aee5c4dbf89e2d8d067932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  healthText: {fileID: 1623757532}
-  playerObject: {fileID: 225741541}
   attacks: {fileID: 2001531775}
   gameStateManager: {fileID: 1871309292}
+  player: {fileID: 225741541}
 --- !u!4 &1165470122
 Transform:
   m_ObjectHideFlags: 0
@@ -1218,13 +1230,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001531775}
-        m_TargetAssemblyTypeName: Attacks, Assembly-CSharp
-        m_MethodName: HeavyAttack
-        m_Mode: 2
+      - m_Target: {fileID: 225741542}
+        m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
+        m_MethodName: PlayerHeavyAttack
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1165470120}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1363,13 +1375,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001531775}
-        m_TargetAssemblyTypeName: Attacks, Assembly-CSharp
-        m_MethodName: QuickAttack
-        m_Mode: 2
+      - m_Target: {fileID: 225741542}
+        m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
+        m_MethodName: PlayerQuickAttack
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1165470120}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1894,13 +1906,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001531775}
-        m_TargetAssemblyTypeName: Attacks, Assembly-CSharp
-        m_MethodName: NormalAttack
-        m_Mode: 2
+      - m_Target: {fileID: 225741542}
+        m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
+        m_MethodName: PlayerNormalAttack
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1165470120}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2081,7 +2093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92af34485707dc4c997d9ca7f5e77a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: {fileID: 2001531775}
+  aiObject: {fileID: 0}
 --- !u!1 &2001531774
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,6 +2104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2001531776}
   - component: {fileID: 2001531775}
+  - component: {fileID: 2001531777}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2111,15 +2124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03396cadae788cd49ba9cd5f9f338ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quickDamage: 34
-  quickProcent: 100
-  normalDamage: 50
-  normalProcent: 33
-  heavyDamage: 67
-  heavyProcent: 25
   playerObject: {fileID: 225741541}
   aiObject: {fileID: 1165470120}
-  hitOrMiss: 0
+  gameState: {fileID: 1871309292}
+  quickDamages: 050000000f000000
+  normalDamages: 0500000014000000
+  heavyDamages: 010000001e000000
+  quickThreshold: 75
+  heavyThreshold: 25
+  damage: 0
   turnflag: 0
   endgame: 0
   listOfActions: []
@@ -2137,6 +2150,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2001531777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001531774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f375e145ecbc82c4ebd840991399dfe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiObject: {fileID: 1165470120}
+  playerObject: {fileID: 225741541}
 --- !u!1 &2080616331
 GameObject:
   m_ObjectHideFlags: 0
