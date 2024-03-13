@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimax: {fileID: 2001531778}
-  h: 3
+  h: 1
 --- !u!4 &1165470122
 Transform:
   m_ObjectHideFlags: 0
@@ -2120,9 +2120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03396cadae788cd49ba9cd5f9f338ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quickDamages: 020000000f000000
-  normalDamages: 0500000014000000
-  heavyDamages: 010000001e000000
+  quickDamages: 010000000f000000
+  normalDamages: 1e00000014000000
+  heavyDamages: 030000001e000000
   quickThreshold: 75
   heavyThreshold: 25
   damage: 0

@@ -32,6 +32,7 @@ public class Minimax : MonoBehaviour
     private int temp;
     private GameState tempGameState;
     public int score;
+    public int bestMove;
 
     private void Start()
     {
@@ -91,49 +92,47 @@ public class Minimax : MonoBehaviour
 
     // Ten mój minimax
 
-    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, GameState gameState)
+    public int MinimaxFunction(int depth, int nodeIndex, bool isMax, int h, GameState gameState, int score)
     {
+        //int bestAction = -1;
         if (depth == h)
         { 
-            return nodeIndex;
+            return bestMove;
         }
         if (isMax)
-        {
-            
+        {        
             temp = int.MinValue;
-
+            int tempScore = -1;
             for (int i = 0; i < attacks.listOfActions.Count; i++)
             {
+                Debug.Log(i);
                 tempGameState = gameStateManager.CopyAndModifyState();
                 attacks.listOfActions[i].ExecuteAction(GameObjects.Instance.PlayerObject, tempGameState);
-                //Debug.Log("Gracz Maksymalizuj¹cy");
-                //Debug.Log("Score after action number " + i + ": " + (tempGameState.aiHealth - tempGameState.playerHealth));
-                //Debug.Log("Player Health: " +tempGameState.playerHealth);
-                //Debug.Log("AI Health: " + tempGameState.aiHealth);
-                //Debug.Log("\n");
-
-                temp = Math.Max(temp, MinimaxFunction(depth + 1, i, false, h, gameState));
+                tempScore = EvaluateGameState(tempGameState);
+                temp = Math.Max(tempScore, MinimaxFunction(depth + 1, i, true, h, gameState, score));
+                if(tempScore<temp)
+                {
+                    bestMove = i;
+    
+                    //bestAction = i;
+                    Debug.Log("xd?");
+                }
+               // Debug.Log(temp);
             }
             return temp;
         }
 
         else
         {
-            temp = int.MaxValue;
-
-            for (int i = 0; i < attacks.listOfActions.Count; i++)
-            {
-                tempGameState = gameStateManager.CopyAndModifyState();
-                attacks.listOfActions[i].ExecuteAction(GameObjects.Instance.AiObject, tempGameState);
-                //Debug.Log("Gracz Minimalizuj¹cy");
-                //Debug.Log("Score after action number " + i + ": " + (tempGameState.aiHealth - tempGameState.playerHealth));
-                //Debug.Log("Player Health: " + tempGameState.playerHealth);
-                //Debug.Log("AI Health: " + tempGameState.aiHealth);
-                //Debug.Log("\n");
-
-                temp = Math.Min(temp, MinimaxFunction(depth + 1, i, true, h, gameState));
-            }
-            return temp;
+            return -1;
+            //temp = int.MaxValue;
+            //for (int i = 0; i < attacks.listOfActions.Count; i++)
+            //{
+            //    tempGameState = gameStateManager.CopyAndModifyState();
+            //    attacks.listOfActions[i].ExecuteAction(GameObjects.Instance.AiObject, tempGameState);
+            //    temp = Math.Min(temp, MinimaxFunction(depth + 1, i, true, h, gameState, score));
+            //}
+            //return temp;
         }
     }
 }
