@@ -53,23 +53,20 @@ public class Minimax : MonoBehaviour
         }
         if (isMax) // Gracz Maksymalizuj¹cy
         {
-            //Debug.Log("-----------------MAX-------------------");
+            Debug.Log("-----------------MAX-------------------");
             int bestValue = int.MinValue;
             int bestAction = -1;
-
             for (int i = 0; i < attacks.listOfAIActions.Count; i++)
             {
                 GameState tempGameState = gameStateManager.CopyAndModifyState(gameState); // kopia stanu gry
-
-
-                if(i == 3 && !tempGameState.aiPotion)
+                Debug.Log(tempGameState.aiPotion);
+                if(i == 1 && !tempGameState.aiPotion)
                 {
                     continue;//?
                 }
-
                 attacks.listOfAIActions[i].ExecuteAction(GameObjects.Instance.PlayerObject, tempGameState); // egzekucja akcji
-                Debug.Log(tempGameState.aiPotion);
-                //Debug.Log("Action number: "+ i+"    G³êbokoœæ: " + depth + "  PlayerHP: "+tempGameState.playerHealth + "    AiHP:"+   tempGameState.aiHealth + "    Stan gry: "+EvaluateGameState(tempGameState));
+                Debug.Log("Action number: "+ i+"    G³êbokoœæ: " + depth + "  PlayerHP: "+tempGameState.playerHealth + "    AiHP:"+   tempGameState.aiHealth + "    Stan gry: "
+                    +EvaluateGameState(tempGameState) + "  Miksturka: " +tempGameState.aiPotion);
                 int value = MinimaxFunction(depth + 1, false, h, tempGameState);
 
                 if (value > bestValue)
@@ -90,7 +87,7 @@ public class Minimax : MonoBehaviour
         }
         else // Gracz Minimalizuj¹cy
         {
-            //Debug.Log("------------------MIN------------------");
+            Debug.Log("------------------MIN------------------");
             int worstValue = int.MaxValue;
             int worstAction = -1;
 
@@ -98,15 +95,15 @@ public class Minimax : MonoBehaviour
             {
                 GameState tempGameState = gameStateManager.CopyAndModifyState(gameState);
 
-
-                if (i == 3 && !tempGameState.playerPotion)
+                if (i == 1 && !tempGameState.playerPotion)
                 {
                     continue;//?
                 }
 
 
                 attacks.listOfPlayerActions[i].ExecuteAction(GameObjects.Instance.AiObject, tempGameState);
-                //Debug.Log("Action number: " + i + "    G³êbokoœæ: " + depth + "  PlayerHP: " + tempGameState.playerHealth + "    AiHP:" + tempGameState.aiHealth + "    Stan gry: " + EvaluateGameState(tempGameState));
+                Debug.Log("Action number: " + i + "    G³êbokoœæ: " + depth + "  PlayerHP: " + tempGameState.playerHealth + "    AiHP:" + tempGameState.aiHealth + "    Stan gry: " 
+                    + EvaluateGameState(tempGameState)+ "   Miksturka: " + tempGameState.playerPotion);
                 int value = MinimaxFunction(depth + 1, true, h, tempGameState);
                 if (value < worstValue)
                 {
