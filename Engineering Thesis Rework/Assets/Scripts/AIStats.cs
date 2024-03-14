@@ -28,36 +28,65 @@ public class AIStats : MonoBehaviour, IDamageable
     {
         if (!attacks.turnflag && !attacks.endgame)
         {
-            gameState = gameStateManager.CopyAndModifyState();
 
-            //Debug.Log("Wybrany ruch: "+ minimax.MinimaxFunction(0, 0, true, h, gameState));
-            //attacks.listOfActions[minimax.MinimaxFunction(0, 0, true, h, gameState)].ExecuteAction(player, gameStateManager.currentState);
-            //result = minimax.MinimaxFunction(0, 0, true, h, gameState);
-            //Debug.Log(result.bestActionIndex);
+            // Easy Mode
+            if (h == 0)
+            {
+                int x = Random.Range(0, attacks.listOfAIActions.Count);
+                Debug.Log("Podjêta akcja: " + x);
+                attacks.listOfAIActions[x].ExecuteAction(player, gameStateManager.currentState);
+                attacks.ChangeTurn();
+            }
 
-            //Debug.Log(gameState.aiHealth);
+            // Medium Mode
+            if (h == 1)
+            {
+                gameState = gameStateManager.CopyAndModifyState(gameStateManager.currentState);
+                attacks.listOfAIActions[minimax.MinimaxFunction(0, true, 1, gameState)].ExecuteAction(player, gameStateManager.currentState);
+                attacks.ChangeTurn();
+            }
 
-            //attacks.listOfActions[0].ExecuteAction(player, gameState);
-            //Debug.Log("Virtual Player Health:" + gameState.playerHealth);
-            //attacks.listOfActions[1].ExecuteAction(player, gameState);
-            //Debug.Log("Virtual Player Health:" + gameState.playerHealth);
-            //attacks.listOfActions[2].ExecuteAction(player, gameState);
-            //Debug.Log("Virtual Player Health:" + gameState.playerHealth);
-            //Debug.Log(gameState.aiHealth);
-            attacks.ChangeTurn();
+            if (h >= 3)
+            {
+                gameState = gameStateManager.CopyAndModifyState(gameStateManager.currentState);
+                attacks.listOfAIActions[minimax.MinimaxFunction(0, true, h, gameState)].ExecuteAction(player, gameStateManager.currentState);
+                attacks.ChangeTurn();
+            }
+
         }
+
     }
 
     public void Damage(int damage, GameState state)
     {
         if (state.aiHealth - damage <= 0)
         {
-            state.aiHealth = 0;
+            state.aiHealth -= damage;
+
             attacks.EndGame(this.gameObject, state);
         }
         else
         {
             state.aiHealth -= damage;
+        }
+    }
+
+    public void Heal(int heal, GameState state)
+    {
+        if (state == GameObjects.Instance.StateManager.currentState) 
+        {
+        //{
+            attacks.listOfAIActions.RemoveAt(attacks.listOfAIActions.Count - 1);
+        //    Debug.Log("AI heal");
+        }
+        state.aiPotion = false;
+        if (state.aiHealth + heal >= 100)
+        {
+            state.aiHealth = 100;
+        }
+        else
+        {
+            state.aiHealth += heal;
         }
     }
 }

@@ -26,6 +26,8 @@ public class Attacks : MonoBehaviour
     [SerializeField] public int quickThreshold;
     [SerializeField] public int heavyThreshold;
 
+    [SerializeField] public int healValue;
+
     public int damage;
 
     //public int hitOrMiss;
@@ -34,6 +36,9 @@ public class Attacks : MonoBehaviour
     public bool endgame;
 
     public List<Attacks> listOfActions = new List<Attacks>();
+
+    public List<Attacks> listOfPlayerActions = new List<Attacks>();
+    public List<Attacks> listOfAIActions = new List<Attacks>();
 
     public virtual void ExecuteAction(GameObject target, GameState state)
     {
@@ -66,13 +71,26 @@ public class Attacks : MonoBehaviour
         }
     }
 
-    public void Awake()
+    public class PotionAction : Attacks
+    {
+        public override void ExecuteAction(GameObject target, GameState state)
+        {
+            Potion(target, state);
+            base.ExecuteAction(target, state);
+        }
+    }
+
+
+    public void Start()
     {
         gameState = GameObjects.Instance.StateManager;
         playerObject = GameObjects.Instance.PlayerObject;
         aiObject = GameObjects.Instance.AiObject;
         
-        //ChangeTurn();
+        ChangeTurn();
+
+        PotionAction potionActionObj = new PotionAction();
+        potionActionObj.healValue = healValue;
 
         QuickAttackAction quickAttackObj = new QuickAttackAction();
         quickAttackObj.quickDamages = quickDamages;
@@ -86,9 +104,27 @@ public class Attacks : MonoBehaviour
         heavyAttackObj.heavyDamages = heavyDamages;
         //heavyAttackObj.heavyProcent = heavyProcent;
 
+
+
+
         listOfActions.Add(quickAttackObj);
         listOfActions.Add(normalAttackObj);
         listOfActions.Add(heavyAttackObj);
+        listOfActions.Add(potionActionObj);
+
+
+        listOfPlayerActions.Add(quickAttackObj);
+        //listOfPlayerActions.Add(normalAttackObj);
+        //listOfPlayerActions.Add(heavyAttackObj);
+        listOfPlayerActions.Add(potionActionObj);
+
+
+
+        listOfAIActions.Add(quickAttackObj);
+        //listOfAIActions.Add(normalAttackObj);
+        //listOfAIActions.Add(heavyAttackObj);
+        listOfAIActions.Add(potionActionObj);
+
     }
 
     public void Attack(int damage, GameObject target, GameState state)
@@ -98,6 +134,28 @@ public class Attacks : MonoBehaviour
             damageableObject.Damage(damage,state);
         }
     }
+
+    public void Potion(GameObject target, GameState state)
+    {
+        if(target == GameObjects.Instance.AiObject)
+        {
+            if(GameObjects.Instance.PlayerObject.TryGetComponent(out IDamageable damageableObject))
+            {
+                damageableObject.Heal(GameObjects.Instance.Attacks.healValue, state);
+            }
+        }
+        if (target == GameObjects.Instance.PlayerObject)
+        {
+            if (GameObjects.Instance.AiObject.TryGetComponent(out IDamageable damageableObject))
+            {
+                damageableObject.Heal(GameObjects.Instance.Attacks.healValue, state);
+            }
+        }
+
+    }
+
+
+
 
     public void QuickAttack(GameObject target, GameState state)
     {
@@ -124,7 +182,7 @@ public class Attacks : MonoBehaviour
                 damage = quickDamages[0];
             }
         }
-        Debug.Log("Quick attack target:" + target);
+        //Debug.Log("Quick attack target:" + target);
         Attack(damage, target, state);
     }
 
@@ -183,6 +241,8 @@ public class Attacks : MonoBehaviour
         Attack(damage, target, state);
     }
 
+
+
     public void ChangeTurn()
     {
         turnflag = !turnflag;
@@ -190,9 +250,18 @@ public class Attacks : MonoBehaviour
 
     public void EndGame(GameObject loser, GameState state)
     {
-        Debug.Log(loser.name + " lost!");
         if(state == gameState.currentState)
         {
+            if(loser == GameObjects.Instance.PlayerObject)
+            {
+                GameObjects.Instance.StateManager.currentState.playerHealth = 0;
+            }
+
+            if (loser == GameObjects.Instance.AiObject)
+            {
+                GameObjects.Instance.StateManager.currentState.aiHealth = 0;
+            }
+            Debug.Log(loser.name + " lost!");
             endgame = true;
         }
     }

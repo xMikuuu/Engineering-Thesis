@@ -6,6 +6,8 @@ public class GameState
 {
     public int playerHealth;
     public int aiHealth;
+    public bool playerPotion;
+    public bool aiPotion;
 }
 public class GameStateManager : MonoBehaviour
 {
@@ -17,14 +19,18 @@ public class GameStateManager : MonoBehaviour
         {
             playerHealth = 100,
             aiHealth = 100,
+            playerPotion = true,
+            aiPotion = true
         };
     }
-    public GameState CopyAndModifyState()
+    public GameState CopyAndModifyState(GameState state)
     {
         GameState copiedState = new GameState()
         {
-            playerHealth = currentState.playerHealth,
-            aiHealth = currentState.aiHealth,
+            playerHealth = state.playerHealth,
+            aiHealth = state.aiHealth,
+            playerPotion = state.playerPotion,
+            aiPotion = state.aiPotion
         };
         return copiedState;
     }

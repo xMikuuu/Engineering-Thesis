@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IDamageable
 {
     void Damage(int damageTaken, GameState state);
+
+    void Heal(int damageHealed, GameState state);
 }
