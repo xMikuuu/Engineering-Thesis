@@ -114,17 +114,14 @@ public class Attacks : MonoBehaviour
 
 
         listOfPlayerActions.Add(quickAttackObj);
-        //listOfPlayerActions.Add(normalAttackObj);
-        //listOfPlayerActions.Add(heavyAttackObj);
+        listOfPlayerActions.Add(normalAttackObj);
+        listOfPlayerActions.Add(heavyAttackObj);
         listOfPlayerActions.Add(potionActionObj);
 
-
-
         listOfAIActions.Add(quickAttackObj);
-        //listOfAIActions.Add(normalAttackObj);
-        //listOfAIActions.Add(heavyAttackObj);
+        listOfAIActions.Add(normalAttackObj);
+        listOfAIActions.Add(heavyAttackObj);
         listOfAIActions.Add(potionActionObj);
-
     }
 
     public void Attack(int damage, GameObject target, GameState state)
@@ -182,7 +179,7 @@ public class Attacks : MonoBehaviour
                 damage = quickDamages[0];
             }
         }
-        //Debug.Log("Quick attack target:" + target);
+       // Debug.Log("Quick attack target:" + target);
         Attack(damage, target, state);
     }
 

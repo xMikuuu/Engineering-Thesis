@@ -76,10 +76,10 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void Heal(int heal, GameState state)
     {
-        if(state == gameStateManager.currentState)
+        if(state == GameObjects.Instance.StateManager.currentState)
         {
-            //Debug.Log("Player heal");
-            //attacks.listOfPlayerActions.RemoveAt(attacks.listOfPlayerActions.Count - 1);
+            Debug.Log("Player heal");
+            attacks.listOfPlayerActions.RemoveAt(attacks.listOfPlayerActions.Count - 1);
             potionUsed = true;
         }
         state.playerPotion = false;
@@ -128,6 +128,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void PlayerQuickAttack()
     {
+
         attacks.listOfActions[0].ExecuteAction(ai, gameStateManager.currentState);
     }
     public void PlayerNormalAttack()
