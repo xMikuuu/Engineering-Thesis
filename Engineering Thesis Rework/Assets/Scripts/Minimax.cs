@@ -72,7 +72,7 @@ public class Minimax : MonoBehaviour
             int bestValue = int.MinValue;
             int bestAction = -1;
 
-            File.AppendAllText(Path.Combine(path, "logs.txt"), "-----------------MAX-------------------\n");
+            //File.AppendAllText(Path.Combine(path, "logs.txt"), "-----------------MAX-------------------\n");
             for (int i = 0; i < attacks.listOfAIActions.Count; i++)
             {
                 GameState tempGameState = gameStateManager.CopyAndModifyState(gameState); // kopia stanu gry
@@ -108,7 +108,7 @@ public class Minimax : MonoBehaviour
         {
             int worstValue = int.MaxValue;
             int worstAction = -1;
-            File.AppendAllText(Path.Combine(path, "logs.txt"), "-----------------MIN-------------------\n");
+            //File.AppendAllText(Path.Combine(path, "logs.txt"), "-----------------MIN-------------------\n");
             for (int i = 0; i < attacks.listOfPlayerActions.Count; i++)
             {
                 GameState tempGameState = gameStateManager.CopyAndModifyState(gameState);

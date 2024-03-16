@@ -128,19 +128,22 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void PlayerQuickAttack()
     {
-
+        Debug.Log("Quick");
         attacks.listOfActions[0].ExecuteAction(ai, gameStateManager.currentState);
     }
     public void PlayerNormalAttack()
     {
+        Debug.Log("Normal");
         attacks.listOfActions[1].ExecuteAction(ai, gameStateManager.currentState);
     }
     public void PlayerHeavyAttack()
     {
+        Debug.Log("Heavy");
         attacks.listOfActions[2].ExecuteAction(ai, gameStateManager.currentState);
     }
     public void PlayerPotion()
     {
+        Debug.Log("Potion");
         attacks.listOfActions[3].ExecuteAction(ai, gameStateManager.currentState);
     }
 

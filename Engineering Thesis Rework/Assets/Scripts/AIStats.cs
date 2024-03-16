@@ -55,8 +55,8 @@ public class AIStats : MonoBehaviour, IDamageable
             {
                 gameState = gameStateManager.CopyAndModifyState(gameStateManager.currentState);
                 actionNumber = minimax.MinimaxFunction(0, true, h, gameState);
-                attacks.listOfAIActions[actionNumber].ExecuteAction(player, gameStateManager.currentState);
                 Debug.Log(actionNumber);
+                attacks.listOfAIActions[actionNumber].ExecuteAction(player, gameStateManager.currentState);
                 //File.AppendAllText(Path.Combine(path, "logs.txt"), "\nWybrana akcja: " + actionNumber + " Dla stanu gry:" + minimax.EvaluateGameState(gameStateManager.currentState));
                 attacks.ChangeTurn();
             }

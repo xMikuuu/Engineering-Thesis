@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimax: {fileID: 2001531778}
-  h: 3
+  h: 7
 --- !u!4 &1165470122
 Transform:
   m_ObjectHideFlags: 0
@@ -2458,6 +2458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   bestMove: 0
+  path: 
 --- !u!1 &2080616331
 GameObject:
   m_ObjectHideFlags: 0
