@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
@@ -29,6 +30,7 @@ public class Attacks : MonoBehaviour
     [SerializeField] public int healValue;
 
     public int damage;
+    public bool menu;
 
     //public int hitOrMiss;
 
@@ -39,6 +41,10 @@ public class Attacks : MonoBehaviour
 
     public List<Attacks> listOfPlayerActions = new List<Attacks>();
     public List<Attacks> listOfAIActions = new List<Attacks>();
+
+    public TextMeshProUGUI console;
+
+    [SerializeField] private endingScreen endingScreen;
 
     public virtual void ExecuteAction(GameObject target, GameState state)
     {
@@ -148,6 +154,17 @@ public class Attacks : MonoBehaviour
                 damageableObject.Heal(GameObjects.Instance.Attacks.healValue, state);
             }
         }
+        if (state == GameObjects.Instance.StateManager.currentState)
+        {
+            if (target == GameObjects.Instance.AiObject)
+            {
+                GameObjects.Instance.Attacks.console.SetText("Player used healing potion!");
+            }
+            if (target == GameObjects.Instance.PlayerObject)
+            {
+                GameObjects.Instance.Attacks.console.SetText("AI used healing potion!");
+            }
+        }
 
     }
 
@@ -179,8 +196,33 @@ public class Attacks : MonoBehaviour
                 damage = quickDamages[0];
             }
         }
-       // Debug.Log("Quick attack target:" + target);
-        Attack(damage, target, state);
+        // Debug.Log("Quick attack target:" + target);
+        if (state == GameObjects.Instance.StateManager.currentState)
+        {
+            if (target == GameObjects.Instance.PlayerObject)
+            {
+                if (state.playerHealth >= GameObjects.Instance.Attacks.quickThreshold)
+                {
+                    GameObjects.Instance.Attacks.console.SetText("AI used Quick Attack!\nVery Effective!");
+                }
+                else
+                {
+                    GameObjects.Instance.Attacks.console.SetText("AI used Quick Attack!\nNot Effective!");
+                }
+            }
+            if (target == GameObjects.Instance.AiObject)
+            {
+                if (state.aiHealth >= GameObjects.Instance.Attacks.quickThreshold)
+                {
+                    GameObjects.Instance.Attacks.console.SetText("Player used Quick Attack!\nVery Effective!");
+                }
+                else
+                {
+                    GameObjects.Instance.Attacks.console.SetText("Player used Quick Attack!\nNot Effective!");
+                }
+            }
+        }
+            Attack(damage, target, state);
     }
 
     public void NormalAttack(GameObject target, GameState state)
@@ -208,6 +250,31 @@ public class Attacks : MonoBehaviour
             }
         }
         //Debug.Log("Normal attack target:" + target);
+        if (state == GameObjects.Instance.StateManager.currentState)
+        {
+            if (target == GameObjects.Instance.PlayerObject)
+            {
+                if (state.playerHealth < GameObjects.Instance.Attacks.quickThreshold && state.playerHealth > GameObjects.Instance.Attacks.heavyThreshold)
+                {
+                    GameObjects.Instance.Attacks.console.SetText("AI used Normal Attack!\nVery Effective!");
+                }
+                else
+                {
+                    GameObjects.Instance.Attacks.console.SetText("AI used Normal Attack!\nNot Effective!");
+                }
+            }
+            if (target == GameObjects.Instance.AiObject)
+            {
+                if (state.aiHealth < GameObjects.Instance.Attacks.quickThreshold && state.aiHealth > GameObjects.Instance.Attacks.heavyThreshold)
+                {
+                    GameObjects.Instance.Attacks.console.SetText("Player used Normal Attack!\nVery Effective!");
+                }
+                else
+                {
+                    GameObjects.Instance.Attacks.console.SetText("Player used Normal Attack!\nNot Effective!");
+                }
+            }
+        }
         Attack(damage, target, state);
     }
     public void HeavyAttack(GameObject target, GameState state)
@@ -235,6 +302,31 @@ public class Attacks : MonoBehaviour
             }
         }
         //Debug.Log("Heavy attack target:" + target);
+        if (state == GameObjects.Instance.StateManager.currentState)
+        {
+            if (target == GameObjects.Instance.PlayerObject)
+            {
+                if (state.playerHealth <= GameObjects.Instance.Attacks.heavyThreshold)
+                {
+                    GameObjects.Instance.Attacks.console.SetText("AI used Heavy Attack!\nVery Effective!");
+                }
+                else
+                {
+                    GameObjects.Instance.Attacks.console.SetText("AI used Heavy Attack!\nNot Effective!");
+                }
+            }
+            if (target == GameObjects.Instance.AiObject)
+            {
+                if (state.aiHealth <= GameObjects.Instance.Attacks.heavyThreshold)
+                {
+                    GameObjects.Instance.Attacks.console.SetText("Player used Heavy Attack!\nVery Effective!");
+                }
+                else
+                {
+                    GameObjects.Instance.Attacks.console.SetText("Player used Heavy Attack!\nNot Effective!");
+                }
+            }
+        }
         Attack(damage, target, state);
     }
 
@@ -258,8 +350,9 @@ public class Attacks : MonoBehaviour
             {
                 GameObjects.Instance.StateManager.currentState.aiHealth = 0;
             }
-            Debug.Log(loser.name + " lost!");
+            GameObjects.Instance.Attacks.console.SetText(loser.name + " Lost!\n Fatality");
             endgame = true;
+            endingScreen.endingScreenObject.active = true;
         }
     }
 

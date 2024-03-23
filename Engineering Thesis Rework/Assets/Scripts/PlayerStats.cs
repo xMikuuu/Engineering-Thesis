@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -25,17 +24,30 @@ public class PlayerStats : MonoBehaviour, IDamageable
     public static float time;
     private float timeRemaining = 1;
     [SerializeField] private Minimax minimax;
-
+    // stuff for health etc
+    [SerializeField] public TMP_Text hitpoints; // Display how much health player has left
+    [SerializeField] public Slider slider; // this slider thingy
+    public Image healthBar; // display health as a bar
+    public Gradient gradient; // gradient thingy to change colors
     private void Start()
     {
         gameStateManager = GameObjects.Instance.StateManager;
         ai = GameObjects.Instance.AiObject;
         attacks = GameObjects.Instance.Attacks;
+        SetHealth();
     }
-
+    public void SetHealth()
+    {
+        slider.maxValue = 100;
+        slider.value = 100;
+        healthBar.color = gradient.Evaluate(slider.normalizedValue);
+    }
 
     private void Update()
     {
+        hitpoints.text = gameStateManager.currentState.playerHealth.ToString();
+        slider.value = gameStateManager.currentState.playerHealth;
+        healthBar.color = gradient.Evaluate(slider.normalizedValue);
         OneSecondTimer();
 
         //if (attacks.turnflag && !attacks.endgame && !delay)
@@ -49,7 +61,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
         //        attacks.ChangeTurn();
 
         //}
-        if (attacks.turnflag && !attacks.endgame)
+        if (attacks.turnflag && !attacks.endgame && !attacks.menu && delay)
         {
             TurnOnButtons();
         }
@@ -79,7 +91,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
         if(state == GameObjects.Instance.StateManager.currentState)
         {
             Debug.Log("Player heal");
-            attacks.listOfPlayerActions.RemoveAt(attacks.listOfPlayerActions.Count - 1);
+            //attacks.listOfPlayerActions.RemoveAt(attacks.listOfPlayerActions.Count - 1);
             potionUsed = true;
         }
         state.playerPotion = false;
@@ -128,30 +140,30 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void PlayerQuickAttack()
     {
-        Debug.Log("Quick");
         attacks.listOfActions[0].ExecuteAction(ai, gameStateManager.currentState);
+        delay = false;
     }
     public void PlayerNormalAttack()
     {
-        Debug.Log("Normal");
         attacks.listOfActions[1].ExecuteAction(ai, gameStateManager.currentState);
+        delay = false;
     }
     public void PlayerHeavyAttack()
     {
-        Debug.Log("Heavy");
         attacks.listOfActions[2].ExecuteAction(ai, gameStateManager.currentState);
+        delay = false;
     }
     public void PlayerPotion()
     {
-        Debug.Log("Potion");
         attacks.listOfActions[3].ExecuteAction(ai, gameStateManager.currentState);
+        delay = false;
     }
 
     private void TurnDelay()
     {
         if (time > 1)
         {
-            if (time % 2 == 0)
+            if (time % 1 == 0)
             {
                 delay = true;
             }
@@ -160,7 +172,6 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     void OneSecondTimer()
     {
-        
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
